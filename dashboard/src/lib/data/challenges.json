@@ -1,0 +1,3439 @@
+{
+  "ch01": [
+    {
+      "id": "ch01-lin-step",
+      "title": "Linear State Update x\u207a = Ax + Bu",
+      "difficulty": "Medium",
+      "func": "lin_step",
+      "tags": [
+        "model"
+      ],
+      "section": "1.2.1",
+      "prompt": "The core discrete linear model is x\u207a = A x + B u. For 2\u00d72 A, length-2 B and scalar input u,\n\nImplement `lin_step(A, B, x, u)` returning the next state (length-2).",
+      "starter": "def lin_step(A, B, x, u):\n    pass\n",
+      "solution": "def lin_step(A, B, x, u):\n    return [A[0][0]*x[0]+A[0][1]*x[1]+B[0]*u,\n            A[1][0]*x[0]+A[1][1]*x[1]+B[1]*u]\n",
+      "tests": [
+        {
+          "args": [
+            [
+              [
+                1,
+                0.1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            [
+              0,
+              0.1
+            ],
+            [
+              1,
+              0
+            ],
+            2
+          ],
+          "expected": [
+            1.0,
+            0.2
+          ]
+        },
+        {
+          "args": [
+            [
+              [
+                0.9,
+                0
+              ],
+              [
+                0,
+                0.8
+              ]
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              -1
+            ],
+            1
+          ],
+          "expected": [
+            2.8,
+            0.2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch01-c2d",
+      "title": "Discretize a Scalar System",
+      "difficulty": "Hard",
+      "func": "c2d_scalar",
+      "tags": [
+        "discretization"
+      ],
+      "section": "1.2.4",
+      "prompt": "Continuous \u1e8b = a x + b u sampled with zero-order hold over dt becomes x\u207a = a_d x + b_d u with\n\n    a_d = e^{a\u00b7dt},   b_d = b\u00b7(e^{a\u00b7dt} \u2212 1)/a\n\nImplement `c2d_scalar(a, b, dt)` \u2192 [a_d, b_d] (assume a \u2260 0).",
+      "starter": "import math\n\ndef c2d_scalar(a, b, dt):\n    pass\n",
+      "solution": "import math\n\ndef c2d_scalar(a, b, dt):\n    ad = math.exp(a*dt)\n    bd = b*(math.exp(a*dt) - 1)/a\n    return [ad, bd]\n",
+      "tests": [
+        {
+          "args": [
+            -1,
+            1,
+            0.1
+          ],
+          "expected": [
+            0.904837418,
+            0.095162582
+          ]
+        },
+        {
+          "args": [
+            0.5,
+            2,
+            0.2
+          ],
+          "expected": [
+            1.105170918,
+            0.420683672
+          ]
+        },
+        {
+          "args": [
+            -2,
+            1,
+            0.5
+          ],
+          "expected": [
+            0.367879441,
+            0.316060279
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch01-inbox",
+      "title": "State Constraints (Box)",
+      "difficulty": "Easy",
+      "func": "in_box",
+      "tags": [
+        "constraints"
+      ],
+      "section": "1.2.5",
+      "prompt": "Constraints X are often a box: lo \u2264 x \u2264 hi componentwise. Implement `in_box(lo, hi, x)` \u2192 bool.",
+      "starter": "def in_box(lo, hi, x):\n    pass\n",
+      "solution": "def in_box(lo, hi, x):\n    return all(lo[i] <= x[i] <= hi[i]\n              for i in range(len(x)))\n",
+      "tests": [
+        {
+          "args": [
+            [
+              -1,
+              -1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0.5,
+              0
+            ]
+          ],
+          "expected": true
+        },
+        {
+          "args": [
+            [
+              -1,
+              -1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              0
+            ]
+          ],
+          "expected": false
+        }
+      ]
+    },
+    {
+      "id": "ch01-quadform",
+      "title": "Quadratic Form x\u1d40Qx",
+      "difficulty": "Easy",
+      "func": "quad_form",
+      "tags": [
+        "cost"
+      ],
+      "section": "1.3.1",
+      "prompt": "The LQ cost is built from quadratic forms x\u1d40Qx = \u03a3\u1d62 \u03a3\u2c7c x\u1d62 Q\u1d62\u2c7c x\u2c7c. Implement `quad_form(Q, x)`.",
+      "starter": "def quad_form(Q, x):\n    pass\n",
+      "solution": "def quad_form(Q, x):\n    n = len(x)\n    return sum(x[i]*Q[i][j]*x[j]\n              for i in range(n) for j in range(n))\n",
+      "tests": [
+        {
+          "args": [
+            [
+              [
+                2,
+                0
+              ],
+              [
+                0,
+                3
+              ]
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "expected": 5
+        },
+        {
+          "args": [
+            [
+              [
+                1,
+                0.5
+              ],
+              [
+                0.5,
+                1
+              ]
+            ],
+            [
+              2,
+              -1
+            ]
+          ],
+          "expected": 3.0
+        }
+      ]
+    },
+    {
+      "id": "ch01-riccati",
+      "title": "One Riccati Backward Step",
+      "difficulty": "Medium",
+      "func": "riccati_step",
+      "tags": [
+        "dp",
+        "riccati"
+      ],
+      "section": "1.3.3",
+      "prompt": "The dynamic-programming (Riccati) recursion for the scalar LQ cost-to-go P is\n\n    P\u207b = q + a\u00b2P \u2212 (aPb)\u00b2/(r + b\u00b2P)\n\nImplement `riccati_step(P, a, b, q, r)`.",
+      "starter": "def riccati_step(P, a, b, q, r):\n    pass\n",
+      "solution": "def riccati_step(P, a, b, q, r):\n    return q + a*a*P - (a*P*b)**2/(r + b*b*P)\n",
+      "tests": [
+        {
+          "args": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "expected": 1.5
+        },
+        {
+          "args": [
+            0.5,
+            1.2,
+            1,
+            2,
+            1
+          ],
+          "expected": 2.48
+        },
+        {
+          "args": [
+            3,
+            0.9,
+            0.5,
+            1,
+            0.1
+          ],
+          "expected": 1.285882353
+        }
+      ]
+    },
+    {
+      "id": "ch01-lqr",
+      "title": "Infinite-Horizon LQR Gain",
+      "difficulty": "Hard",
+      "func": "lqr_gain_scalar",
+      "tags": [
+        "lqr",
+        "riccati"
+      ],
+      "section": "1.3.4",
+      "prompt": "Iterate the Riccati recursion to its fixed point P, then the optimal gain of x\u207a = a x + b u (cost \u03a3 q x\u00b2 + r u\u00b2) is K = bPa/(r + b\u00b2P), u = \u2212Kx.\n\nImplement `lqr_gain_scalar(a, b, q, r)`.",
+      "starter": "def lqr_gain_scalar(a, b, q, r):\n    pass\n",
+      "solution": "def lqr_gain_scalar(a, b, q, r):\n    P = q\n    for _ in range(1000):\n        Pn = q + a*a*P - (a*P*b)**2/(r + b*b*P)\n        if abs(Pn - P) < 1e-12:\n            P = Pn; break\n        P = Pn\n    return (b*P*a)/(r + b*b*P)\n",
+      "tests": [
+        {
+          "args": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "expected": 0.618033989
+        },
+        {
+          "args": [
+            1.1,
+            1,
+            1,
+            1
+          ],
+          "expected": 0.703427929
+        },
+        {
+          "args": [
+            0.9,
+            0.5,
+            2,
+            1
+          ],
+          "expected": 0.841990468
+        }
+      ]
+    },
+    {
+      "id": "ch01-ctrb",
+      "title": "Controllability Matrix",
+      "difficulty": "Medium",
+      "func": "ctrb2",
+      "tags": [
+        "controllability"
+      ],
+      "section": "1.3.5",
+      "prompt": "For (A, b) with 2\u00d72 A the controllability matrix is \ud835\udc9e = [b  Ab] (columns).\n\nImplement `ctrb2(A, B)` returning the 2\u00d72 matrix [[b\u2080, (Ab)\u2080], [b\u2081, (Ab)\u2081]].",
+      "starter": "def ctrb2(A, B):\n    pass\n",
+      "solution": "def ctrb2(A, B):\n    return [[B[0], A[0][0]*B[0]+A[0][1]*B[1]],\n            [B[1], A[1][0]*B[0]+A[1][1]*B[1]]]\n",
+      "tests": [
+        {
+          "args": [
+            [
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                0
+              ]
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "expected": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ]
+        },
+        {
+          "args": [
+            [
+              [
+                1,
+                1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "expected": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch01-controllable",
+      "title": "Is the System Controllable?",
+      "difficulty": "Medium",
+      "func": "is_controllable",
+      "tags": [
+        "controllability"
+      ],
+      "section": "1.3.5",
+      "prompt": "(A, b) is controllable iff det[b  Ab] \u2260 0. Implement `is_controllable(A, B)` \u2192 bool.",
+      "starter": "def is_controllable(A, B):\n    pass\n",
+      "solution": "def is_controllable(A, B):\n    Ab = [A[0][0]*B[0]+A[0][1]*B[1],\n          A[1][0]*B[0]+A[1][1]*B[1]]\n    return abs(B[0]*Ab[1] - B[1]*Ab[0]) > 1e-9\n",
+      "tests": [
+        {
+          "args": [
+            [
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                0
+              ]
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "expected": true
+        },
+        {
+          "args": [
+            [
+              [
+                1,
+                0
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "expected": false
+        }
+      ]
+    },
+    {
+      "id": "ch01-stable-cl",
+      "title": "Closed-Loop Stability (Scalar)",
+      "difficulty": "Easy",
+      "func": "is_stable_cl",
+      "tags": [
+        "convergence"
+      ],
+      "section": "1.3.6",
+      "prompt": "The LQR closed loop x\u207a = (a \u2212 bK)x converges iff |a \u2212 bK| < 1.\n\nImplement `is_stable_cl(a, b, k)` \u2192 bool.",
+      "starter": "def is_stable_cl(a, b, k):\n    pass\n",
+      "solution": "def is_stable_cl(a, b, k):\n    return abs(a - b*k) < 1\n",
+      "tests": [
+        {
+          "args": [
+            1,
+            1,
+            0.5
+          ],
+          "expected": true
+        },
+        {
+          "args": [
+            1,
+            1,
+            3
+          ],
+          "expected": false
+        },
+        {
+          "args": [
+            1.2,
+            1,
+            0.1
+          ],
+          "expected": false
+        }
+      ]
+    },
+    {
+      "id": "ch01-gauss",
+      "title": "Gaussian Density",
+      "difficulty": "Easy",
+      "func": "gaussian_pdf",
+      "tags": [
+        "estimation"
+      ],
+      "section": "1.4.1",
+      "prompt": "State estimation assumes Gaussian noise. The 1-D density is\n\n    p(x) = 1/(\u03c3\u221a(2\u03c0)) \u00b7 exp(\u2212\u00bd((x\u2212\u03bc)/\u03c3)\u00b2)\n\nImplement `gaussian_pdf(x, mu, sigma)`.",
+      "starter": "import math\n\ndef gaussian_pdf(x, mu, sigma):\n    pass\n",
+      "solution": "import math\n\ndef gaussian_pdf(x, mu, sigma):\n    return math.exp(-0.5*((x-mu)/sigma)**2)/(sigma*math.sqrt(2*math.pi))\n",
+      "tests": [
+        {
+          "args": [
+            0,
+            0,
+            1
+          ],
+          "expected": 0.39894228
+        },
+        {
+          "args": [
+            1,
+            0,
+            1
+          ],
+          "expected": 0.241970725
+        },
+        {
+          "args": [
+            2,
+            2,
+            0.5
+          ],
+          "expected": 0.797884561
+        }
+      ]
+    },
+    {
+      "id": "ch01-lstsq",
+      "title": "Least-Squares Line Fit",
+      "difficulty": "Medium",
+      "func": "least_squares_1d",
+      "tags": [
+        "least-squares"
+      ],
+      "section": "1.4.3",
+      "prompt": "Optimal estimation is rooted in least squares. Fit y = m x + c by the normal equations\n\n    m = (n\u03a3xy \u2212 \u03a3x\u03a3y)/(n\u03a3x\u00b2 \u2212 (\u03a3x)\u00b2),   c = (\u03a3y \u2212 m\u03a3x)/n\n\nImplement `least_squares_1d(xs, ys)` \u2192 [m, c].",
+      "starter": "def least_squares_1d(xs, ys):\n    pass\n",
+      "solution": "def least_squares_1d(xs, ys):\n    n = len(xs); sx = sum(xs); sy = sum(ys)\n    sxx = sum(x*x for x in xs)\n    sxy = sum(xs[i]*ys[i] for i in range(n))\n    m = (n*sxy - sx*sy)/(n*sxx - sx*sx)\n    return [m, (sy - m*sx)/n]\n",
+      "tests": [
+        {
+          "args": [
+            [
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              1,
+              3,
+              5,
+              7
+            ]
+          ],
+          "expected": [
+            2.0,
+            1.0
+          ]
+        },
+        {
+          "args": [
+            [
+              0,
+              1,
+              2
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          "expected": [
+            0.0,
+            1.0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch01-observable",
+      "title": "Is the System Observable?",
+      "difficulty": "Medium",
+      "func": "is_observable",
+      "tags": [
+        "observability"
+      ],
+      "section": "1.4.5",
+      "prompt": "With output y = C x, the pair (A, C) is observable iff det[[C],[CA]] \u2260 0 (C a length-2 row).\n\nImplement `is_observable(A, C)` \u2192 bool.",
+      "starter": "def is_observable(A, C):\n    pass\n",
+      "solution": "def is_observable(A, C):\n    CA = [C[0]*A[0][0]+C[1]*A[1][0],\n          C[0]*A[0][1]+C[1]*A[1][1]]\n    return abs(C[0]*CA[1] - C[1]*CA[0]) > 1e-9\n",
+      "tests": [
+        {
+          "args": [
+            [
+              [
+                1,
+                1
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "expected": true
+        },
+        {
+          "args": [
+            [
+              [
+                1,
+                0
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "expected": false
+        }
+      ]
+    },
+    {
+      "id": "ch01-target",
+      "title": "Steady-State Input for a Setpoint",
+      "difficulty": "Easy",
+      "func": "target_input",
+      "tags": [
+        "tracking"
+      ],
+      "section": "1.5.1",
+      "prompt": "To hold x at a setpoint x_sp for x\u207a = a x + b u, the steady input solves x_sp = a x_sp + b u_ss, so u_ss = (1 \u2212 a)x_sp/b.\n\nImplement `target_input(a, b, xsp)`.",
+      "starter": "def target_input(a, b, xsp):\n    pass\n",
+      "solution": "def target_input(a, b, xsp):\n    return (1 - a)*xsp/b\n",
+      "tests": [
+        {
+          "args": [
+            0.9,
+            1,
+            5
+          ],
+          "expected": 0.5
+        },
+        {
+          "args": [
+            0.5,
+            2,
+            3
+          ],
+          "expected": 0.75
+        },
+        {
+          "args": [
+            0.8,
+            0.5,
+            10
+          ],
+          "expected": 4.0
+        }
+      ]
+    }
+  ],
+  "ch02": [
+    {
+      "id": "ch02-stagecost",
+      "title": "MPC Stage Cost \u2113(x,u)",
+      "difficulty": "Medium",
+      "func": "stage_cost",
+      "tags": [
+        "cost"
+      ],
+      "section": "2.2",
+      "prompt": "The regulation stage cost is \u2113(x,u) = x\u1d40Qx + u\u1d40Ru. Given matrices Q, R and vectors x, u,\n\nImplement `stage_cost(Q, R, x, u)`.",
+      "starter": "def stage_cost(Q, R, x, u):\n    pass\n",
+      "solution": "def stage_cost(Q, R, x, u):\n    def qf(M, v):\n        n = len(v)\n        return sum(v[i]*M[i][j]*v[j]\n                  for i in range(n) for j in range(n))\n    return qf(Q, x) + qf(R, u)\n",
+      "tests": [
+        {
+          "args": [
+            [
+              [
+                1,
+                0
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            [
+              [
+                1
+              ]
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              3
+            ]
+          ],
+          "expected": 14
+        },
+        {
+          "args": [
+            [
+              [
+                2,
+                0
+              ],
+              [
+                0,
+                2
+              ]
+            ],
+            [
+              [
+                0.5
+              ]
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2
+            ]
+          ],
+          "expected": 6.0
+        }
+      ]
+    },
+    {
+      "id": "ch02-trajcost",
+      "title": "Finite-Horizon Cost of a Trajectory",
+      "difficulty": "Medium",
+      "func": "traj_cost",
+      "tags": [
+        "cost",
+        "horizon"
+      ],
+      "section": "2.3",
+      "prompt": "The MPC objective over a horizon (scalar states/inputs) is\n\n    J = \u03a3\u2096 (q x\u2096\u00b2 + r u\u2096\u00b2) + p_f x_N\u00b2\n\n`xs` has N+1 states, `us` has N inputs. Implement `traj_cost(xs, us, q, r, pf)`.",
+      "starter": "def traj_cost(xs, us, q, r, pf):\n    pass\n",
+      "solution": "def traj_cost(xs, us, q, r, pf):\n    j = sum(q*x*x for x in xs[:-1]) + sum(r*u*u for u in us)\n    return j + pf*xs[-1]*xs[-1]\n",
+      "tests": [
+        {
+          "args": [
+            [
+              1,
+              0.5,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            1,
+            1,
+            5
+          ],
+          "expected": 3.25
+        },
+        {
+          "args": [
+            [
+              2,
+              1
+            ],
+            [
+              0.5
+            ],
+            1,
+            2,
+            1
+          ],
+          "expected": 5.5
+        }
+      ]
+    },
+    {
+      "id": "ch02-first",
+      "title": "Receding Horizon: Apply First Move",
+      "difficulty": "Easy",
+      "func": "first_control",
+      "tags": [
+        "receding-horizon"
+      ],
+      "section": "2.2",
+      "prompt": "MPC solves for a whole input sequence but *applies only the first input*, then re-optimizes.\n\nImplement `first_control(useq)`.",
+      "starter": "def first_control(useq):\n    pass\n",
+      "solution": "def first_control(useq):\n    return useq[0]\n",
+      "tests": [
+        {
+          "args": [
+            [
+              3,
+              1,
+              -2,
+              0
+            ]
+          ],
+          "expected": 3
+        },
+        {
+          "args": [
+            [
+              -1.5,
+              2,
+              2
+            ]
+          ],
+          "expected": -1.5
+        }
+      ]
+    },
+    {
+      "id": "ch02-posdef",
+      "title": "Positive Definite Penalty (2\u00d72)",
+      "difficulty": "Easy",
+      "func": "is_posdef2",
+      "tags": [
+        "stability"
+      ],
+      "section": "2.4.2",
+      "prompt": "Stabilizing MPC needs Q \u227b 0. By Sylvester's criterion a symmetric 2\u00d72 Q is PD iff Q\u2080\u2080 > 0 and det Q > 0.\n\nImplement `is_posdef2(Q)` \u2192 bool.",
+      "starter": "def is_posdef2(Q):\n    pass\n",
+      "solution": "def is_posdef2(Q):\n    det = Q[0][0]*Q[1][1] - Q[0][1]*Q[1][0]\n    return Q[0][0] > 0 and det > 0\n",
+      "tests": [
+        {
+          "args": [
+            [
+              [
+                2,
+                0
+              ],
+              [
+                0,
+                3
+              ]
+            ]
+          ],
+          "expected": true
+        },
+        {
+          "args": [
+            [
+              [
+                1,
+                2
+              ],
+              [
+                2,
+                1
+              ]
+            ]
+          ],
+          "expected": false
+        },
+        {
+          "args": [
+            [
+              [
+                0,
+                0
+              ],
+              [
+                0,
+                1
+              ]
+            ]
+          ],
+          "expected": false
+        }
+      ]
+    },
+    {
+      "id": "ch02-lyap",
+      "title": "Lyapunov Descent Condition",
+      "difficulty": "Medium",
+      "func": "lyap_decrease",
+      "tags": [
+        "stability"
+      ],
+      "section": "2.4.2",
+      "prompt": "The MPC value function is a Lyapunov function when it decreases by at least the stage cost:\n\n    V(x\u207a) \u2212 V(x) \u2264 \u2212\u2113(x,u)\n\nGiven Vx = V(x), Vnext = V(x\u207a) and stage = \u2113, implement `lyap_decrease(Vx, Vnext, stage)` \u2192 bool.",
+      "starter": "def lyap_decrease(Vx, Vnext, stage):\n    pass\n",
+      "solution": "def lyap_decrease(Vx, Vnext, stage):\n    return Vnext - Vx <= -stage + 1e-9\n",
+      "tests": [
+        {
+          "args": [
+            10,
+            7,
+            3
+          ],
+          "expected": true
+        },
+        {
+          "args": [
+            10,
+            8,
+            3
+          ],
+          "expected": false
+        },
+        {
+          "args": [
+            5,
+            4,
+            1
+          ],
+          "expected": true
+        }
+      ]
+    },
+    {
+      "id": "ch02-expstable",
+      "title": "Exponential Stability (Scalar)",
+      "difficulty": "Easy",
+      "func": "is_exp_stable",
+      "tags": [
+        "stability"
+      ],
+      "section": "2.4.3",
+      "prompt": "A scalar mode x\u207a = a x is exponentially stable iff |a| < 1.\n\nImplement `is_exp_stable(a)` \u2192 bool.",
+      "starter": "def is_exp_stable(a):\n    pass\n",
+      "solution": "def is_exp_stable(a):\n    return abs(a) < 1\n",
+      "tests": [
+        {
+          "args": [
+            0.5
+          ],
+          "expected": true
+        },
+        {
+          "args": [
+            1
+          ],
+          "expected": false
+        },
+        {
+          "args": [
+            -0.9
+          ],
+          "expected": true
+        },
+        {
+          "args": [
+            1.2
+          ],
+          "expected": false
+        }
+      ]
+    },
+    {
+      "id": "ch02-terminal",
+      "title": "Terminal Cost Vf(x)",
+      "difficulty": "Easy",
+      "func": "terminal_cost",
+      "tags": [
+        "cost"
+      ],
+      "section": "2.5.1",
+      "prompt": "The unconstrained-LQR terminal cost is Vf(x) = p_f \u00b7 x\u1d40x = p_f \u03a3 x\u1d62\u00b2.\n\nImplement `terminal_cost(pf, x)`.",
+      "starter": "def terminal_cost(pf, x):\n    pass\n",
+      "solution": "def terminal_cost(pf, x):\n    return pf*sum(xi*xi for xi in x)\n",
+      "tests": [
+        {
+          "args": [
+            10,
+            [
+              1,
+              2
+            ]
+          ],
+          "expected": 50
+        },
+        {
+          "args": [
+            2,
+            [
+              0,
+              0,
+              3
+            ]
+          ],
+          "expected": 18
+        },
+        {
+          "args": [
+            1,
+            [
+              1,
+              1,
+              1,
+              1
+            ]
+          ],
+          "expected": 4
+        }
+      ]
+    },
+    {
+      "id": "ch02-termset",
+      "title": "Terminal Constraint Set Xf",
+      "difficulty": "Medium",
+      "func": "in_terminal_set",
+      "tags": [
+        "terminal-set"
+      ],
+      "section": "2.6",
+      "prompt": "A common terminal set is the sublevel set X_f = {x : x\u1d40P x \u2264 c}.\n\nImplement `in_terminal_set(P, x, c)` \u2192 bool.",
+      "starter": "def in_terminal_set(P, x, c):\n    pass\n",
+      "solution": "def in_terminal_set(P, x, c):\n    qf = sum(x[i]*P[i][j]*x[j]\n            for i in range(len(x)) for j in range(len(x)))\n    return qf <= c + 1e-9\n",
+      "tests": [
+        {
+          "args": [
+            [
+              [
+                1,
+                0
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            [
+              0.5,
+              0.5
+            ],
+            1
+          ],
+          "expected": true
+        },
+        {
+          "args": [
+            [
+              [
+                1,
+                0
+              ],
+              [
+                0,
+                1
+              ]
+            ],
+            [
+              1,
+              1
+            ],
+            1
+          ],
+          "expected": false
+        }
+      ]
+    },
+    {
+      "id": "ch02-shift",
+      "title": "Warm-Start Shift (Suboptimal MPC)",
+      "difficulty": "Medium",
+      "func": "shift_sequence",
+      "tags": [
+        "suboptimal"
+      ],
+      "section": "2.7",
+      "prompt": "Suboptimal MPC warm-starts by shifting the previous input sequence: drop the applied first input and append a terminal input u_f.\n\nImplement `shift_sequence(useq, uf)`.",
+      "starter": "def shift_sequence(useq, uf):\n    pass\n",
+      "solution": "def shift_sequence(useq, uf):\n    return useq[1:] + [uf]\n",
+      "tests": [
+        {
+          "args": [
+            [
+              1,
+              2,
+              3
+            ],
+            0
+          ],
+          "expected": [
+            2,
+            3,
+            0
+          ]
+        },
+        {
+          "args": [
+            [
+              0.5,
+              -1,
+              2,
+              4
+            ],
+            0
+          ],
+          "expected": [
+            -1,
+            2,
+            4,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch02-avg",
+      "title": "Asymptotic Average Cost",
+      "difficulty": "Easy",
+      "func": "average_cost",
+      "tags": [
+        "economic"
+      ],
+      "section": "2.8.1",
+      "prompt": "Economic MPC studies the average stage cost over time, (1/N)\u03a3 \u2113\u2096.\n\nImplement `average_cost(cs)` (mean of the list).",
+      "starter": "def average_cost(cs):\n    pass\n",
+      "solution": "def average_cost(cs):\n    return sum(cs)/len(cs)\n",
+      "tests": [
+        {
+          "args": [
+            [
+              1,
+              2,
+              3,
+              4
+            ]
+          ],
+          "expected": 2.5
+        },
+        {
+          "args": [
+            [
+              5,
+              5,
+              5
+            ]
+          ],
+          "expected": 5.0
+        }
+      ]
+    },
+    {
+      "id": "ch02-quantize",
+      "title": "Discrete Actuator: Nearest Level",
+      "difficulty": "Medium",
+      "func": "quantize",
+      "tags": [
+        "discrete-actuators"
+      ],
+      "section": "2.9",
+      "prompt": "With discrete actuators the input must snap to an allowed level. Return the level nearest to u (ties \u2192 the one that appears first).\n\nImplement `quantize(u, levels)`.",
+      "starter": "def quantize(u, levels):\n    pass\n",
+      "solution": "def quantize(u, levels):\n    return min(levels, key=lambda L: abs(L - u))\n",
+      "tests": [
+        {
+          "args": [
+            0.7,
+            [
+              0,
+              1,
+              2
+            ]
+          ],
+          "expected": 1
+        },
+        {
+          "args": [
+            1.4,
+            [
+              0,
+              1,
+              2
+            ]
+          ],
+          "expected": 1
+        },
+        {
+          "args": [
+            -0.6,
+            [
+              -1,
+              0,
+              1
+            ]
+          ],
+          "expected": -1
+        }
+      ]
+    }
+  ],
+  "ch03": [
+    {
+      "id": "ch03-margin",
+      "title": "Inherent Robustness Margin",
+      "difficulty": "Easy",
+      "func": "robust_margin",
+      "tags": [
+        "robustness"
+      ],
+      "section": "3.2",
+      "prompt": "A box constraint [lo, hi] tolerates a disturbance up to half its width minus the current offset. Return (hi \u2212 lo)/2 \u2212 dist.\n\nImplement `robust_margin(box, dist)`.",
+      "starter": "def robust_margin(box, dist):\n    pass\n",
+      "solution": "def robust_margin(box, dist):\n    return (box[1]-box[0])/2 - dist\n",
+      "tests": [
+        {
+          "args": [
+            [
+              -2,
+              2
+            ],
+            0.5
+          ],
+          "expected": 1.5
+        },
+        {
+          "args": [
+            [
+              -1,
+              1
+            ],
+            1
+          ],
+          "expected": 0.0
+        }
+      ]
+    },
+    {
+      "id": "ch03-minmax",
+      "title": "Min-Max Robust Cost",
+      "difficulty": "Medium",
+      "func": "worst_case_cost",
+      "tags": [
+        "min-max"
+      ],
+      "section": "3.3",
+      "prompt": "Min-max MPC picks the control minimizing the worst-case cost over the disturbance. `costs` is a matrix: row = control, column = disturbance. Return min\u1d63\u2092w max\u1d68\u2097.\n\nImplement `worst_case_cost(costs)`.",
+      "starter": "def worst_case_cost(costs):\n    pass\n",
+      "solution": "def worst_case_cost(costs):\n    return min(max(row) for row in costs)\n",
+      "tests": [
+        {
+          "args": [
+            [
+              [
+                3,
+                1
+              ],
+              [
+                2,
+                4
+              ]
+            ]
+          ],
+          "expected": 3
+        },
+        {
+          "args": [
+            [
+              [
+                5,
+                5,
+                5
+              ],
+              [
+                9,
+                1,
+                2
+              ]
+            ]
+          ],
+          "expected": 5
+        }
+      ]
+    },
+    {
+      "id": "ch03-reach",
+      "title": "One-Step Reachable Interval",
+      "difficulty": "Medium",
+      "func": "reach_interval",
+      "tags": [
+        "tube"
+      ],
+      "section": "3.4",
+      "prompt": "For x\u207a = a x + w with a \u2265 0, disturbance |w| \u2264 W and x \u2208 [lo, hi], the next state lies in\n\n    [a\u00b7lo \u2212 W, a\u00b7hi + W]\n\nImplement `reach_interval(a, box, w)`.",
+      "starter": "def reach_interval(a, box, w):\n    pass\n",
+      "solution": "def reach_interval(a, box, w):\n    return [a*box[0]-w, a*box[1]+w]\n",
+      "tests": [
+        {
+          "args": [
+            0.5,
+            [
+              -1,
+              1
+            ],
+            0.2
+          ],
+          "expected": [
+            -0.7,
+            0.7
+          ]
+        },
+        {
+          "args": [
+            0.9,
+            [
+              0,
+              2
+            ],
+            0.5
+          ],
+          "expected": [
+            -0.5,
+            2.3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch03-mink",
+      "title": "Minkowski Sum of Intervals",
+      "difficulty": "Easy",
+      "func": "minkowski_interval",
+      "tags": [
+        "tube",
+        "sets"
+      ],
+      "section": "3.5",
+      "prompt": "Tubes propagate uncertainty via Minkowski sums: [a\u2080,a\u2081] \u2295 [b\u2080,b\u2081] = [a\u2080+b\u2080, a\u2081+b\u2081].\n\nImplement `minkowski_interval(a, b)`.",
+      "starter": "def minkowski_interval(a, b):\n    pass\n",
+      "solution": "def minkowski_interval(a, b):\n    return [a[0]+b[0], a[1]+b[1]]\n",
+      "tests": [
+        {
+          "args": [
+            [
+              -1,
+              1
+            ],
+            [
+              -2,
+              2
+            ]
+          ],
+          "expected": [
+            -3,
+            3
+          ]
+        },
+        {
+          "args": [
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "expected": [
+            1,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch03-pontry",
+      "title": "Pontryagin Difference of Intervals",
+      "difficulty": "Medium",
+      "func": "pontry_diff",
+      "tags": [
+        "sets"
+      ],
+      "section": "3.5",
+      "prompt": "Tube MPC erodes a set by the disturbance via the Pontryagin difference: for intervals A \u2296 B = [a\u2080 \u2212 b\u2080, a\u2081 \u2212 b\u2081].\n\nImplement `pontry_diff(A, B)`.",
+      "starter": "def pontry_diff(A, B):\n    pass\n",
+      "solution": "def pontry_diff(A, B):\n    return [A[0]-B[0], A[1]-B[1]]\n",
+      "tests": [
+        {
+          "args": [
+            [
+              -3,
+              3
+            ],
+            [
+              -1,
+              1
+            ]
+          ],
+          "expected": [
+            -2,
+            2
+          ]
+        },
+        {
+          "args": [
+            [
+              -2,
+              5
+            ],
+            [
+              -1,
+              2
+            ]
+          ],
+          "expected": [
+            -1,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch03-tighten",
+      "title": "Constraint Tightening",
+      "difficulty": "Easy",
+      "func": "tighten",
+      "tags": [
+        "tube",
+        "constraints"
+      ],
+      "section": "3.5",
+      "prompt": "Tube MPC tightens a box [lo, hi] by the tube margin m \u2192 [lo+m, hi\u2212m].\n\nImplement `tighten(box, m)`.",
+      "starter": "def tighten(box, m):\n    pass\n",
+      "solution": "def tighten(box, m):\n    return [box[0]+m, box[1]-m]\n",
+      "tests": [
+        {
+          "args": [
+            [
+              -5,
+              5
+            ],
+            1
+          ],
+          "expected": [
+            -4,
+            4
+          ]
+        },
+        {
+          "args": [
+            [
+              0,
+              10
+            ],
+            2.5
+          ],
+          "expected": [
+            2.5,
+            7.5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch03-mrpi",
+      "title": "Invariant-Set Size (Geometric Bound)",
+      "difficulty": "Medium",
+      "func": "mrpi_bound",
+      "tags": [
+        "invariant-set"
+      ],
+      "section": "3.5",
+      "prompt": "A rigid disturbance tube with contraction \u03b1 and disturbance bound w has size after n steps\n\n    w\u00b7(1 \u2212 \u03b1\u207f)/(1 \u2212 \u03b1)\n\n(the partial geometric sum). Implement `mrpi_bound(alpha, w, n)`.",
+      "starter": "def mrpi_bound(alpha, w, n):\n    pass\n",
+      "solution": "def mrpi_bound(alpha, w, n):\n    return w*(1 - alpha**n)/(1 - alpha)\n",
+      "tests": [
+        {
+          "args": [
+            0.5,
+            1,
+            3
+          ],
+          "expected": 1.75
+        },
+        {
+          "args": [
+            0.8,
+            2,
+            5
+          ],
+          "expected": 6.7232
+        },
+        {
+          "args": [
+            0.5,
+            1,
+            10
+          ],
+          "expected": 1.998046875
+        }
+      ]
+    },
+    {
+      "id": "ch03-support",
+      "title": "Support Function of a Box",
+      "difficulty": "Medium",
+      "func": "support_box",
+      "tags": [
+        "sets"
+      ],
+      "section": "3.5",
+      "prompt": "The support function of an axis-aligned box in direction d is \u03a3\u1d62 max(lo\u1d62 d\u1d62, hi\u1d62 d\u1d62).\n\nImplement `support_box(lo, hi, d)`.",
+      "starter": "def support_box(lo, hi, d):\n    pass\n",
+      "solution": "def support_box(lo, hi, d):\n    return sum(max(lo[i]*d[i], hi[i]*d[i])\n              for i in range(len(d)))\n",
+      "tests": [
+        {
+          "args": [
+            [
+              -1,
+              -1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "expected": 1
+        },
+        {
+          "args": [
+            [
+              -1,
+              -2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              -1,
+              1
+            ]
+          ],
+          "expected": 3
+        }
+      ]
+    },
+    {
+      "id": "ch03-tube",
+      "title": "Inside the Tube?",
+      "difficulty": "Easy",
+      "func": "in_tube",
+      "tags": [
+        "tube"
+      ],
+      "section": "3.5",
+      "prompt": "A state is inside a tube of radius R about a center (\u221e-norm) iff |x\u1d62 \u2212 center\u1d62| \u2264 R for all i.\n\nImplement `in_tube(center, radius, x)` \u2192 bool.",
+      "starter": "def in_tube(center, radius, x):\n    pass\n",
+      "solution": "def in_tube(center, radius, x):\n    return all(abs(x[i]-center[i]) <= radius + 1e-9\n              for i in range(len(x)))\n",
+      "tests": [
+        {
+          "args": [
+            [
+              0,
+              0
+            ],
+            1,
+            [
+              0.5,
+              -0.5
+            ]
+          ],
+          "expected": true
+        },
+        {
+          "args": [
+            [
+              1,
+              1
+            ],
+            0.5,
+            [
+              2,
+              1
+            ]
+          ],
+          "expected": false
+        }
+      ]
+    },
+    {
+      "id": "ch03-chance",
+      "title": "Chance-Constraint Tightening",
+      "difficulty": "Easy",
+      "func": "chance_tighten",
+      "tags": [
+        "stochastic"
+      ],
+      "section": "3.7",
+      "prompt": "Stochastic MPC turns P(x \u2264 b) \u2265 1\u2212\u03b5 into a tightened deterministic bound b \u2212 k\u00b7\u03c3 (k from the quantile).\n\nImplement `chance_tighten(bound, k, sigma)`.",
+      "starter": "def chance_tighten(bound, k, sigma):\n    pass\n",
+      "solution": "def chance_tighten(bound, k, sigma):\n    return bound - k*sigma\n",
+      "tests": [
+        {
+          "args": [
+            10,
+            1.64,
+            2
+          ],
+          "expected": 6.72
+        },
+        {
+          "args": [
+            5,
+            2.33,
+            0.5
+          ],
+          "expected": 3.835
+        }
+      ]
+    }
+  ],
+  "ch04": [
+    {
+      "id": "ch04-gain",
+      "title": "Kalman Gain",
+      "difficulty": "Easy",
+      "func": "kalman_gain",
+      "tags": [
+        "kalman"
+      ],
+      "section": "4.2",
+      "prompt": "The scalar Kalman gain is K = p\u207b h / (h\u00b2 p\u207b + r).\n\nImplement `kalman_gain(ppred, h, r)`.",
+      "starter": "def kalman_gain(ppred, h, r):\n    pass\n",
+      "solution": "def kalman_gain(ppred, h, r):\n    return ppred*h/(h*h*ppred + r)\n",
+      "tests": [
+        {
+          "args": [
+            1,
+            1,
+            1
+          ],
+          "expected": 0.5
+        },
+        {
+          "args": [
+            2,
+            1,
+            0.5
+          ],
+          "expected": 0.8
+        },
+        {
+          "args": [
+            4,
+            2,
+            1
+          ],
+          "expected": 0.470588235
+        }
+      ]
+    },
+    {
+      "id": "ch04-kalman",
+      "title": "Scalar Kalman Update",
+      "difficulty": "Medium",
+      "func": "kalman_update",
+      "tags": [
+        "kalman"
+      ],
+      "section": "4.2",
+      "prompt": "Measurement update (y = h x + noise, var r):\n\n    K = p\u207bh/(h\u00b2p\u207b+r),  x\u207a = x\u207b + K(y \u2212 hx\u207b),  p\u207a = (1 \u2212 Kh)p\u207b\n\nImplement `kalman_update(xpred, ppred, y, h, r)` \u2192 [x\u207a, p\u207a].",
+      "starter": "def kalman_update(xpred, ppred, y, h, r):\n    pass\n",
+      "solution": "def kalman_update(xpred, ppred, y, h, r):\n    K = ppred*h/(h*h*ppred + r)\n    return [xpred + K*(y - h*xpred), (1 - K*h)*ppred]\n",
+      "tests": [
+        {
+          "args": [
+            0,
+            1,
+            2,
+            1,
+            1
+          ],
+          "expected": [
+            1.0,
+            0.5
+          ]
+        },
+        {
+          "args": [
+            1,
+            2,
+            1,
+            1,
+            0.5
+          ],
+          "expected": [
+            1.0,
+            0.4
+          ]
+        },
+        {
+          "args": [
+            0,
+            4,
+            3,
+            2,
+            1
+          ],
+          "expected": [
+            1.411764706,
+            0.235294118
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch04-predict",
+      "title": "Covariance Prediction",
+      "difficulty": "Easy",
+      "func": "covariance_predict",
+      "tags": [
+        "kalman"
+      ],
+      "section": "4.2",
+      "prompt": "The scalar covariance time-update is p\u207b = a\u00b2 p + q (q = process-noise variance).\n\nImplement `covariance_predict(a, p, q)`.",
+      "starter": "def covariance_predict(a, p, q):\n    pass\n",
+      "solution": "def covariance_predict(a, p, q):\n    return a*a*p + q\n",
+      "tests": [
+        {
+          "args": [
+            1,
+            1,
+            0.1
+          ],
+          "expected": 1.1
+        },
+        {
+          "args": [
+            0.9,
+            2,
+            0.5
+          ],
+          "expected": 2.12
+        },
+        {
+          "args": [
+            1.1,
+            1,
+            0
+          ],
+          "expected": 1.21
+        }
+      ]
+    },
+    {
+      "id": "ch04-innov",
+      "title": "Innovation (Residual)",
+      "difficulty": "Easy",
+      "func": "innovation",
+      "tags": [
+        "kalman"
+      ],
+      "section": "4.2",
+      "prompt": "The innovation is e = y \u2212 h\u00b7x. Implement `innovation(y, h, x)`.",
+      "starter": "def innovation(y, h, x):\n    pass\n",
+      "solution": "def innovation(y, h, x):\n    return y - h*x\n",
+      "tests": [
+        {
+          "args": [
+            5,
+            1,
+            3
+          ],
+          "expected": 2
+        },
+        {
+          "args": [
+            2,
+            2,
+            1
+          ],
+          "expected": 0
+        },
+        {
+          "args": [
+            0,
+            1,
+            0
+          ],
+          "expected": 0
+        }
+      ]
+    },
+    {
+      "id": "ch04-wsq",
+      "title": "Weighted Squared Residual",
+      "difficulty": "Easy",
+      "func": "weighted_sq",
+      "tags": [
+        "least-squares"
+      ],
+      "section": "4.2",
+      "prompt": "The estimation objective sums weighted squared residuals w\u00b7e\u00b2. Implement `weighted_sq(e, w)`.",
+      "starter": "def weighted_sq(e, w):\n    pass\n",
+      "solution": "def weighted_sq(e, w):\n    return w*e*e\n",
+      "tests": [
+        {
+          "args": [
+            2,
+            1
+          ],
+          "expected": 4
+        },
+        {
+          "args": [
+            3,
+            0.5
+          ],
+          "expected": 4.5
+        },
+        {
+          "args": [
+            -4,
+            2
+          ],
+          "expected": 32
+        }
+      ]
+    },
+    {
+      "id": "ch04-arrival",
+      "title": "MHE Arrival Cost",
+      "difficulty": "Easy",
+      "func": "arrival_cost",
+      "tags": [
+        "mhe"
+      ],
+      "section": "4.3",
+      "prompt": "MHE summarizes old data with an arrival cost Z(x) = \u00bd \u00b7 pinv \u00b7 (x \u2212 x\u0304)\u00b2.\n\nImplement `arrival_cost(x, xbar, pinv)`.",
+      "starter": "def arrival_cost(x, xbar, pinv):\n    pass\n",
+      "solution": "def arrival_cost(x, xbar, pinv):\n    return 0.5*pinv*(x - xbar)**2\n",
+      "tests": [
+        {
+          "args": [
+            2,
+            0,
+            1
+          ],
+          "expected": 2.0
+        },
+        {
+          "args": [
+            1,
+            1,
+            4
+          ],
+          "expected": 0.0
+        },
+        {
+          "args": [
+            3,
+            1,
+            0.5
+          ],
+          "expected": 1.0
+        }
+      ]
+    },
+    {
+      "id": "ch04-mhecost",
+      "title": "MHE Window Objective",
+      "difficulty": "Medium",
+      "func": "mhe_cost",
+      "tags": [
+        "mhe"
+      ],
+      "section": "4.3",
+      "prompt": "The MHE objective is the arrival cost plus the sum of stage costs in the window:\n\n    \u03a6 = Z + \u03a3 \u2113\u2096\n\nImplement `mhe_cost(arrival, stagecosts)`.",
+      "starter": "def mhe_cost(arrival, stagecosts):\n    pass\n",
+      "solution": "def mhe_cost(arrival, stagecosts):\n    return arrival + sum(stagecosts)\n",
+      "tests": [
+        {
+          "args": [
+            2,
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          "expected": 5
+        },
+        {
+          "args": [
+            0.5,
+            [
+              2,
+              3
+            ]
+          ],
+          "expected": 5.5
+        }
+      ]
+    },
+    {
+      "id": "ch04-steady",
+      "title": "Steady-State Filter Variance",
+      "difficulty": "Hard",
+      "func": "kf_steady_variance",
+      "tags": [
+        "kalman",
+        "riccati"
+      ],
+      "section": "4.2",
+      "prompt": "Iterate the filtering Riccati recursion to its fixed point (posterior variance p):\n\n    p\u207b = a\u00b2p + q,   p = p\u207b \u2212 (p\u207b)\u00b2h\u00b2/(h\u00b2p\u207b + r)\n\nImplement `kf_steady_variance(a, h, q, r)`.",
+      "starter": "def kf_steady_variance(a, h, q, r):\n    pass\n",
+      "solution": "def kf_steady_variance(a, h, q, r):\n    p = q\n    for _ in range(1000):\n        ppred = a*a*p + q\n        pn = ppred - ppred*ppred*h*h/(h*h*ppred + r)\n        if abs(pn - p) < 1e-13:\n            p = pn; break\n        p = pn\n    return p\n",
+      "tests": [
+        {
+          "args": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "expected": 0.618033989
+        },
+        {
+          "args": [
+            0.9,
+            1,
+            0.5,
+            1
+          ],
+          "expected": 0.467772482
+        },
+        {
+          "args": [
+            1,
+            2,
+            1,
+            4
+          ],
+          "expected": 0.618033989
+        }
+      ]
+    }
+  ],
+  "ch05": [
+    {
+      "id": "ch05-method",
+      "title": "Observer + Controller State Update",
+      "difficulty": "Medium",
+      "func": "augment_step",
+      "tags": [
+        "output-mpc"
+      ],
+      "section": "5.2",
+      "prompt": "Output MPC drives an estimate; the augmented (disturbance) model updates\n\n    x\u207a = a x + b u + b_d d\n\nImplement `augment_step(x, d, a, b, bd, u)`.",
+      "starter": "def augment_step(x, d, a, b, bd, u):\n    pass\n",
+      "solution": "def augment_step(x, d, a, b, bd, u):\n    return a*x + b*u + bd*d\n",
+      "tests": [
+        {
+          "args": [
+            1,
+            0.5,
+            0.9,
+            1,
+            1,
+            2
+          ],
+          "expected": 3.4
+        },
+        {
+          "args": [
+            0,
+            1,
+            0.8,
+            0.5,
+            1,
+            1
+          ],
+          "expected": 1.5
+        }
+      ]
+    },
+    {
+      "id": "ch05-luen",
+      "title": "Luenberger Observer Step",
+      "difficulty": "Medium",
+      "func": "luenberger_step",
+      "tags": [
+        "observer"
+      ],
+      "section": "5.3.2",
+      "prompt": "The state estimate updates x\u0302\u207a = a x\u0302 + b u + l (y \u2212 c x\u0302).\n\nImplement `luenberger_step(xhat, a, b, u, l, c, y)`.",
+      "starter": "def luenberger_step(xhat, a, b, u, l, c, y):\n    pass\n",
+      "solution": "def luenberger_step(xhat, a, b, u, l, c, y):\n    return a*xhat + b*u + l*(y - c*xhat)\n",
+      "tests": [
+        {
+          "args": [
+            0,
+            1,
+            1,
+            2,
+            0.5,
+            1,
+            1
+          ],
+          "expected": 2.5
+        },
+        {
+          "args": [
+            1,
+            0.9,
+            0.5,
+            0,
+            0.3,
+            1,
+            2
+          ],
+          "expected": 1.2
+        }
+      ]
+    },
+    {
+      "id": "ch05-poles",
+      "title": "Separation Principle: Closed-Loop Poles",
+      "difficulty": "Medium",
+      "func": "closed_poles",
+      "tags": [
+        "separation"
+      ],
+      "section": "5.3.2",
+      "prompt": "By separation, the output-feedback poles are the controller pole a \u2212 bK and the observer pole a \u2212 LC (independent).\n\nImplement `closed_poles(a, b, k, c, l)` \u2192 [a \u2212 bK, a \u2212 LC].",
+      "starter": "def closed_poles(a, b, k, c, l):\n    pass\n",
+      "solution": "def closed_poles(a, b, k, c, l):\n    return [a - b*k, a - l*c]\n",
+      "tests": [
+        {
+          "args": [
+            1,
+            1,
+            0.5,
+            1,
+            0.4
+          ],
+          "expected": [
+            0.5,
+            0.6
+          ]
+        },
+        {
+          "args": [
+            0.9,
+            0.5,
+            0.6,
+            1,
+            0.3
+          ],
+          "expected": [
+            0.6,
+            0.6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch05-dist",
+      "title": "Disturbance Estimate (Offset-Free)",
+      "difficulty": "Easy",
+      "func": "disturbance_estimate",
+      "tags": [
+        "offset-free"
+      ],
+      "section": "5.5.1",
+      "prompt": "Offset-free MPC augments an integrating disturbance estimated from the output error d\u0302 = y \u2212 y_model.\n\nImplement `disturbance_estimate(y, ymodel)`.",
+      "starter": "def disturbance_estimate(y, ymodel):\n    pass\n",
+      "solution": "def disturbance_estimate(y, ymodel):\n    return y - ymodel\n",
+      "tests": [
+        {
+          "args": [
+            5,
+            4
+          ],
+          "expected": 1
+        },
+        {
+          "args": [
+            2.5,
+            3
+          ],
+          "expected": -0.5
+        },
+        {
+          "args": [
+            0,
+            0
+          ],
+          "expected": 0
+        }
+      ]
+    },
+    {
+      "id": "ch05-target",
+      "title": "Offset-Free Steady-State Target",
+      "difficulty": "Hard",
+      "func": "target_ss",
+      "tags": [
+        "offset-free"
+      ],
+      "section": "5.5.2",
+      "prompt": "Given the estimated disturbance d, the target (x_ss, u_ss) that makes output y = c x + d equal the setpoint y_sp solves\n\n    x_ss = (y_sp \u2212 d)/c,   u_ss = (1 \u2212 a)x_ss/b\n\nImplement `target_ss(a, b, c, d, ysp)` \u2192 [x_ss, u_ss].",
+      "starter": "def target_ss(a, b, c, d, ysp):\n    pass\n",
+      "solution": "def target_ss(a, b, c, d, ysp):\n    xss = (ysp - d)/c\n    return [xss, (1 - a)*xss/b]\n",
+      "tests": [
+        {
+          "args": [
+            0.9,
+            1,
+            1,
+            0.5,
+            3
+          ],
+          "expected": [
+            2.5,
+            0.25
+          ]
+        },
+        {
+          "args": [
+            0.8,
+            0.5,
+            2,
+            1,
+            4
+          ],
+          "expected": [
+            1.5,
+            0.6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch05-detect",
+      "title": "Scalar Detectability",
+      "difficulty": "Easy",
+      "func": "is_detectable_scalar",
+      "tags": [
+        "detectability"
+      ],
+      "section": "5.6",
+      "prompt": "A scalar mode is detectable if it is stable (|a| < 1) or seen at the output (c \u2260 0).\n\nImplement `is_detectable_scalar(a, c)` \u2192 bool.",
+      "starter": "def is_detectable_scalar(a, c):\n    pass\n",
+      "solution": "def is_detectable_scalar(a, c):\n    return abs(a) < 1 or abs(c) > 1e-9\n",
+      "tests": [
+        {
+          "args": [
+            0.5,
+            0
+          ],
+          "expected": true
+        },
+        {
+          "args": [
+            1.5,
+            1
+          ],
+          "expected": true
+        },
+        {
+          "args": [
+            1.2,
+            0
+          ],
+          "expected": false
+        }
+      ]
+    }
+  ],
+  "ch06": [
+    {
+      "id": "ch06-jacobi",
+      "title": "One Jacobi Iteration",
+      "difficulty": "Hard",
+      "func": "jacobi_step",
+      "tags": [
+        "iteration"
+      ],
+      "section": "6.2",
+      "prompt": "Distributed solvers iterate locally. The Jacobi update for A x = b holds every other component fixed:\n\n    x\u1d62\u207a = (b\u1d62 \u2212 \u03a3\u2c7c\u2260\u1d62 A\u1d62\u2c7c x\u2c7c)/A\u1d62\u1d62\n\nImplement `jacobi_step(A, b, x)` (new full vector).",
+      "starter": "def jacobi_step(A, b, x):\n    pass\n",
+      "solution": "def jacobi_step(A, b, x):\n    n = len(b)\n    return [(b[i] - sum(A[i][j]*x[j]\n            for j in range(n) if j != i))/A[i][i]\n            for i in range(n)]\n",
+      "tests": [
+        {
+          "args": [
+            [
+              [
+                2,
+                1
+              ],
+              [
+                1,
+                3
+              ]
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "expected": [
+            1.5,
+            1.666666667
+          ]
+        },
+        {
+          "args": [
+            [
+              [
+                4,
+                1
+              ],
+              [
+                2,
+                5
+              ]
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "expected": [
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch06-gs",
+      "title": "Gauss-Seidel Iteration",
+      "difficulty": "Hard",
+      "func": "gauss_seidel_step",
+      "tags": [
+        "iteration"
+      ],
+      "section": "6.2",
+      "prompt": "Gauss-Seidel is like Jacobi but reuses components already updated this sweep (in index order).\n\nImplement `gauss_seidel_step(A, b, x)` returning the swept vector.",
+      "starter": "def gauss_seidel_step(A, b, x):\n    pass\n",
+      "solution": "def gauss_seidel_step(A, b, x):\n    xn = list(x); n = len(b)\n    for i in range(n):\n        xn[i] = (b[i] - sum(A[i][j]*xn[j]\n                for j in range(n) if j != i))/A[i][i]\n    return xn\n",
+      "tests": [
+        {
+          "args": [
+            [
+              [
+                2,
+                1
+              ],
+              [
+                1,
+                3
+              ]
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "expected": [
+            1.5,
+            1.166666667
+          ]
+        },
+        {
+          "args": [
+            [
+              [
+                4,
+                1
+              ],
+              [
+                2,
+                5
+              ]
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "expected": [
+            0.0,
+            0.4
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch06-convex",
+      "title": "Cooperative Convex Combination",
+      "difficulty": "Medium",
+      "func": "convex_combine",
+      "tags": [
+        "cooperative"
+      ],
+      "section": "6.3",
+      "prompt": "Cooperative MPC updates plans by a convex step between the old and candidate plan:\n\n    x = (1 \u2212 w)\u00b7x_old + w\u00b7x_new   (elementwise, 0 \u2264 w \u2264 1)\n\nImplement `convex_combine(xold, xnew, w)`.",
+      "starter": "def convex_combine(xold, xnew, w):\n    pass\n",
+      "solution": "def convex_combine(xold, xnew, w):\n    return [(1 - w)*xold[i] + w*xnew[i]\n            for i in range(len(xold))]\n",
+      "tests": [
+        {
+          "args": [
+            [
+              0,
+              0
+            ],
+            [
+              2,
+              4
+            ],
+            0.5
+          ],
+          "expected": [
+            1.0,
+            2.0
+          ]
+        },
+        {
+          "args": [
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              3,
+              3,
+              3
+            ],
+            0.25
+          ],
+          "expected": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch06-coop",
+      "title": "Cooperative (Weighted) Cost",
+      "difficulty": "Easy",
+      "func": "cooperative_cost",
+      "tags": [
+        "cooperative"
+      ],
+      "section": "6.3",
+      "prompt": "A cooperative controller optimizes a weighted sum of local costs J = \u03a3\u1d62 w\u1d62 J\u1d62.\n\nImplement `cooperative_cost(costs, weights)`.",
+      "starter": "def cooperative_cost(costs, weights):\n    pass\n",
+      "solution": "def cooperative_cost(costs, weights):\n    return sum(costs[i]*weights[i]\n              for i in range(len(costs)))\n",
+      "tests": [
+        {
+          "args": [
+            [
+              1,
+              2,
+              3
+            ],
+            [
+              0.5,
+              0.5,
+              1
+            ]
+          ],
+          "expected": 4.5
+        },
+        {
+          "args": [
+            [
+              4,
+              4
+            ],
+            [
+              0.25,
+              0.75
+            ]
+          ],
+          "expected": 4.0
+        }
+      ]
+    },
+    {
+      "id": "ch06-consensus",
+      "title": "Consensus Averaging Step",
+      "difficulty": "Medium",
+      "func": "consensus_step",
+      "tags": [
+        "consensus"
+      ],
+      "section": "6.4",
+      "prompt": "Subsystem i moves toward the average of itself and its neighbors:\n\n    v\u1d62\u207a = mean(v\u1d62, {v\u2c7c : j \u2208 neighbors})\n\nImplement `consensus_step(vals, i, neighbors)`.",
+      "starter": "def consensus_step(vals, i, neighbors):\n    pass\n",
+      "solution": "def consensus_step(vals, i, neighbors):\n    grp = [vals[i]] + [vals[j] for j in neighbors]\n    return sum(grp)/len(grp)\n",
+      "tests": [
+        {
+          "args": [
+            [
+              1,
+              2,
+              3,
+              4
+            ],
+            0,
+            [
+              1,
+              2
+            ]
+          ],
+          "expected": 2.0
+        },
+        {
+          "args": [
+            [
+              10,
+              0,
+              0
+            ],
+            1,
+            [
+              0
+            ]
+          ],
+          "expected": 5.0
+        }
+      ]
+    },
+    {
+      "id": "ch06-avg",
+      "title": "M-Player Average",
+      "difficulty": "Easy",
+      "func": "player_average",
+      "tags": [
+        "cooperative"
+      ],
+      "section": "6.4",
+      "prompt": "A simple cooperative target is the mean of all players' proposals.\n\nImplement `player_average(vals)`.",
+      "starter": "def player_average(vals):\n    pass\n",
+      "solution": "def player_average(vals):\n    return sum(vals)/len(vals)\n",
+      "tests": [
+        {
+          "args": [
+            [
+              1,
+              2,
+              3
+            ]
+          ],
+          "expected": 2.0
+        },
+        {
+          "args": [
+            [
+              4,
+              4,
+              4,
+              4
+            ]
+          ],
+          "expected": 4.0
+        }
+      ]
+    },
+    {
+      "id": "ch06-couple",
+      "title": "Coupled Subsystem Dynamics",
+      "difficulty": "Medium",
+      "func": "coupled_dynamics",
+      "tags": [
+        "coupling"
+      ],
+      "section": "6.5",
+      "prompt": "Interconnected subsystems couple through A: (Ax)\u1d62 = \u03a3\u2c7c A\u1d62\u2c7c x\u2c7c.\n\nImplement `coupled_dynamics(A, x)` (matrix-vector product).",
+      "starter": "def coupled_dynamics(A, x):\n    pass\n",
+      "solution": "def coupled_dynamics(A, x):\n    n = len(x)\n    return [sum(A[i][j]*x[j] for j in range(n))\n            for i in range(n)]\n",
+      "tests": [
+        {
+          "args": [
+            [
+              [
+                1,
+                0.1
+              ],
+              [
+                0.2,
+                1
+              ]
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "expected": [
+            1.2,
+            2.2
+          ]
+        },
+        {
+          "args": [
+            [
+              [
+                0.9,
+                0
+              ],
+              [
+                0.1,
+                0.8
+              ]
+            ],
+            [
+              2,
+              -1
+            ]
+          ],
+          "expected": [
+            1.8,
+            -0.6
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch06-conv",
+      "title": "Convergence Check (\u221e-norm)",
+      "difficulty": "Easy",
+      "func": "max_diff",
+      "tags": [
+        "convergence"
+      ],
+      "section": "6.5",
+      "prompt": "Distributed iterations stop when max|a\u1d62 \u2212 b\u1d62| falls below a tolerance.\n\nImplement `max_diff(a, b)`.",
+      "starter": "def max_diff(a, b):\n    pass\n",
+      "solution": "def max_diff(a, b):\n    return max(abs(a[i]-b[i]) for i in range(len(a)))\n",
+      "tests": [
+        {
+          "args": [
+            [
+              1,
+              2,
+              3
+            ],
+            [
+              1,
+              2,
+              3
+            ]
+          ],
+          "expected": 0
+        },
+        {
+          "args": [
+            [
+              0,
+              0
+            ],
+            [
+              0.1,
+              -0.2
+            ]
+          ],
+          "expected": 0.2
+        }
+      ]
+    }
+  ],
+  "ch07": [
+    {
+      "id": "ch07-findregion",
+      "title": "Which Critical Region?",
+      "difficulty": "Medium",
+      "func": "find_region",
+      "tags": [
+        "parametric"
+      ],
+      "section": "7.2",
+      "prompt": "Explicit MPC partitions the state into regions. Given ordered bounds [lo, hi), return the index of the region containing x, or \u22121.\n\nImplement `find_region(bounds, x)`.",
+      "starter": "def find_region(bounds, x):\n    pass\n",
+      "solution": "def find_region(bounds, x):\n    for i, (lo, hi) in enumerate(bounds):\n        if lo <= x < hi:\n            return i\n    return -1\n",
+      "tests": [
+        {
+          "args": [
+            [
+              [
+                -10,
+                0
+              ],
+              [
+                0,
+                10
+              ]
+            ],
+            3
+          ],
+          "expected": 1
+        },
+        {
+          "args": [
+            [
+              [
+                -10,
+                0
+              ],
+              [
+                0,
+                10
+              ]
+            ],
+            -5
+          ],
+          "expected": 0
+        },
+        {
+          "args": [
+            [
+              [
+                -1,
+                1
+              ],
+              [
+                1,
+                3
+              ]
+            ],
+            5
+          ],
+          "expected": -1
+        }
+      ]
+    },
+    {
+      "id": "ch07-qp",
+      "title": "Scalar QP with Bounds",
+      "difficulty": "Medium",
+      "func": "qp_scalar",
+      "tags": [
+        "parametric-qp"
+      ],
+      "section": "7.3",
+      "prompt": "The parametric QP min \u00bd q u\u00b2 + c u s.t. u_min \u2264 u \u2264 u_max has unconstrained optimum u* = \u2212c/q, then clipped to the bounds (q > 0).\n\nImplement `qp_scalar(q, c, umin, umax)`.",
+      "starter": "def qp_scalar(q, c, umin, umax):\n    pass\n",
+      "solution": "def qp_scalar(q, c, umin, umax):\n    u = -c/q\n    return max(umin, min(umax, u))\n",
+      "tests": [
+        {
+          "args": [
+            2,
+            -4,
+            -1,
+            1
+          ],
+          "expected": 1
+        },
+        {
+          "args": [
+            1,
+            1,
+            -5,
+            5
+          ],
+          "expected": -1.0
+        },
+        {
+          "args": [
+            1,
+            -10,
+            -2,
+            2
+          ],
+          "expected": 2
+        }
+      ]
+    },
+    {
+      "id": "ch07-explicit",
+      "title": "Explicit LQR with Saturation",
+      "difficulty": "Easy",
+      "func": "explicit_lqr",
+      "tags": [
+        "constrained-lq"
+      ],
+      "section": "7.4",
+      "prompt": "Inside the unconstrained region the explicit law is u = \u2212Kx, then clipped to the input limits.\n\nImplement `explicit_lqr(k, x, umin, umax)`.",
+      "starter": "def explicit_lqr(k, x, umin, umax):\n    pass\n",
+      "solution": "def explicit_lqr(k, x, umin, umax):\n    u = -k*x\n    return max(umin, min(umax, u))\n",
+      "tests": [
+        {
+          "args": [
+            0.5,
+            2,
+            -1,
+            1
+          ],
+          "expected": -1
+        },
+        {
+          "args": [
+            2,
+            3,
+            -1,
+            1
+          ],
+          "expected": -1
+        },
+        {
+          "args": [
+            1,
+            -0.5,
+            -1,
+            1
+          ],
+          "expected": 0.5
+        }
+      ]
+    },
+    {
+      "id": "ch07-pwa",
+      "title": "Evaluate a PWA Control Law",
+      "difficulty": "Medium",
+      "func": "eval_pwa",
+      "tags": [
+        "pwa"
+      ],
+      "section": "7.5",
+      "prompt": "The explicit solution is piecewise affine. Each region is (lo, hi, gain, offset); on lo \u2264 x < hi, u = gain\u00b7x + offset.\n\nImplement `eval_pwa(regions, x)`.",
+      "starter": "def eval_pwa(regions, x):\n    pass\n",
+      "solution": "def eval_pwa(regions, x):\n    for lo, hi, gain, off in regions:\n        if lo <= x < hi:\n            return gain*x + off\n    return None\n",
+      "tests": [
+        {
+          "args": [
+            [
+              [
+                -10,
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                10,
+                -2,
+                1
+              ]
+            ],
+            3
+          ],
+          "expected": -5
+        },
+        {
+          "args": [
+            [
+              [
+                -10,
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                10,
+                -2,
+                1
+              ]
+            ],
+            -4
+          ],
+          "expected": -4
+        }
+      ]
+    },
+    {
+      "id": "ch07-pwq",
+      "title": "Piecewise-Quadratic Value Function",
+      "difficulty": "Medium",
+      "func": "eval_pwq",
+      "tags": [
+        "pwq"
+      ],
+      "section": "7.5",
+      "prompt": "The optimal value function is piecewise quadratic. Each region is (lo, hi, a, b, c); on lo \u2264 x < hi, V = a x\u00b2 + b x + c.\n\nImplement `eval_pwq(regions, x)`.",
+      "starter": "def eval_pwq(regions, x):\n    pass\n",
+      "solution": "def eval_pwq(regions, x):\n    for lo, hi, a, b, c in regions:\n        if lo <= x < hi:\n            return a*x*x + b*x + c\n    return None\n",
+      "tests": [
+        {
+          "args": [
+            [
+              [
+                -10,
+                0,
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                10,
+                2,
+                0,
+                1
+              ]
+            ],
+            3
+          ],
+          "expected": 19
+        },
+        {
+          "args": [
+            [
+              [
+                -10,
+                0,
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                10,
+                2,
+                0,
+                1
+              ]
+            ],
+            -2
+          ],
+          "expected": 4
+        }
+      ]
+    },
+    {
+      "id": "ch07-region",
+      "title": "Point in a Polyhedral Region",
+      "difficulty": "Medium",
+      "func": "in_region",
+      "tags": [
+        "polyhedra"
+      ],
+      "section": "7.7",
+      "prompt": "Each critical region is {x : H x \u2264 g}. x lies in it iff every row satisfies H\u1d62\u00b7x \u2264 g\u1d62.\n\nImplement `in_region(H, g, x)` \u2192 bool.",
+      "starter": "def in_region(H, g, x):\n    pass\n",
+      "solution": "def in_region(H, g, x):\n    return all(sum(H[i][j]*x[j] for j in range(len(x)))\n              <= g[i] + 1e-9 for i in range(len(g)))\n",
+      "tests": [
+        {
+          "args": [
+            [
+              [
+                1,
+                0
+              ],
+              [
+                -1,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                -1
+              ]
+            ],
+            [
+              1,
+              1,
+              1,
+              1
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "expected": true
+        },
+        {
+          "args": [
+            [
+              [
+                1,
+                0
+              ],
+              [
+                -1,
+                0
+              ],
+              [
+                0,
+                1
+              ],
+              [
+                0,
+                -1
+              ]
+            ],
+            [
+              1,
+              1,
+              1,
+              1
+            ],
+            [
+              2,
+              0
+            ]
+          ],
+          "expected": false
+        }
+      ]
+    },
+    {
+      "id": "ch07-sat",
+      "title": "Saturate the Explicit Control",
+      "difficulty": "Easy",
+      "func": "saturate",
+      "tags": [
+        "constraints"
+      ],
+      "section": "7.8",
+      "prompt": "The explicit law must respect input limits: clamp u into [umin, umax].\n\nImplement `saturate(u, umin, umax)`.",
+      "starter": "def saturate(u, umin, umax):\n    pass\n",
+      "solution": "def saturate(u, umin, umax):\n    return max(umin, min(umax, u))\n",
+      "tests": [
+        {
+          "args": [
+            5,
+            -1,
+            1
+          ],
+          "expected": 1
+        },
+        {
+          "args": [
+            -3,
+            -1,
+            1
+          ],
+          "expected": -1
+        },
+        {
+          "args": [
+            0.5,
+            -1,
+            1
+          ],
+          "expected": 0.5
+        }
+      ]
+    }
+  ],
+  "ch08": [
+    {
+      "id": "ch08-euler",
+      "title": "Explicit Euler Step",
+      "difficulty": "Medium",
+      "func": "euler_step",
+      "tags": [
+        "integration",
+        "shooting"
+      ],
+      "section": "8.2.1",
+      "prompt": "Direct methods discretize the dynamics. For \u1e8b = a x + b u the explicit-Euler step over dt is\n\n    x\u207a = x + dt\u00b7(a x + b u)\n\nImplement `euler_step(x, u, a, b, dt)`.",
+      "starter": "def euler_step(x, u, a, b, dt):\n    pass\n",
+      "solution": "def euler_step(x, u, a, b, dt):\n    return x + dt*(a*x + b*u)\n",
+      "tests": [
+        {
+          "args": [
+            1,
+            0,
+            -1,
+            1,
+            0.1
+          ],
+          "expected": 0.9
+        },
+        {
+          "args": [
+            2,
+            1,
+            0,
+            1,
+            0.5
+          ],
+          "expected": 2.5
+        },
+        {
+          "args": [
+            1,
+            -1,
+            0.5,
+            2,
+            0.2
+          ],
+          "expected": 0.7
+        }
+      ]
+    },
+    {
+      "id": "ch08-rk2",
+      "title": "Midpoint (RK2) Step",
+      "difficulty": "Medium",
+      "func": "rk2_step",
+      "tags": [
+        "integration"
+      ],
+      "section": "8.2.1",
+      "prompt": "The explicit midpoint method for \u1e8b = a\u00b7x is\n\n    k\u2081 = a\u00b7x,   x\u207a = x + dt\u00b7a\u00b7(x + dt/2\u00b7k\u2081)\n\nImplement `rk2_step(x, a, dt)`.",
+      "starter": "def rk2_step(x, a, dt):\n    pass\n",
+      "solution": "def rk2_step(x, a, dt):\n    k1 = a*x\n    return x + dt*a*(x + dt/2*k1)\n",
+      "tests": [
+        {
+          "args": [
+            1,
+            -1,
+            0.1
+          ],
+          "expected": 0.905
+        },
+        {
+          "args": [
+            1,
+            1,
+            0.5
+          ],
+          "expected": 1.625
+        },
+        {
+          "args": [
+            2,
+            -0.5,
+            0.2
+          ],
+          "expected": 1.81
+        }
+      ]
+    },
+    {
+      "id": "ch08-rk4",
+      "title": "Runge-Kutta 4 Step",
+      "difficulty": "Hard",
+      "func": "rk4_step",
+      "tags": [
+        "integration"
+      ],
+      "section": "8.2.1",
+      "prompt": "RK4 for \u1e8b = a\u00b7x over dt:\n\n    k\u2081=f(x), k\u2082=f(x+dt/2\u00b7k\u2081), k\u2083=f(x+dt/2\u00b7k\u2082), k\u2084=f(x+dt\u00b7k\u2083)\n    x\u207a = x + dt/6\u00b7(k\u2081 + 2k\u2082 + 2k\u2083 + k\u2084),   f(s)=a\u00b7s\n\nImplement `rk4_step(x, a, dt)`.",
+      "starter": "def rk4_step(x, a, dt):\n    pass\n",
+      "solution": "def rk4_step(x, a, dt):\n    f = lambda s: a*s\n    k1 = f(x)\n    k2 = f(x + dt/2*k1)\n    k3 = f(x + dt/2*k2)\n    k4 = f(x + dt*k3)\n    return x + dt/6*(k1 + 2*k2 + 2*k3 + k4)\n",
+      "tests": [
+        {
+          "args": [
+            1,
+            -1,
+            0.1
+          ],
+          "expected": 0.9048375
+        },
+        {
+          "args": [
+            1,
+            1,
+            0.5
+          ],
+          "expected": 1.6484375
+        },
+        {
+          "args": [
+            2,
+            -0.5,
+            0.2
+          ],
+          "expected": 1.809675
+        }
+      ]
+    },
+    {
+      "id": "ch08-implicit",
+      "title": "Implicit Euler Step (Stiff)",
+      "difficulty": "Medium",
+      "func": "implicit_euler",
+      "tags": [
+        "integration",
+        "stiff"
+      ],
+      "section": "8.2.2",
+      "prompt": "For stiff systems the implicit (backward) Euler step for \u1e8b = a\u00b7x solves x\u207a = x + dt\u00b7a\u00b7x\u207a, i.e.\n\n    x\u207a = x / (1 \u2212 dt\u00b7a)\n\nImplement `implicit_euler(x, a, dt)`.",
+      "starter": "def implicit_euler(x, a, dt):\n    pass\n",
+      "solution": "def implicit_euler(x, a, dt):\n    return x/(1 - dt*a)\n",
+      "tests": [
+        {
+          "args": [
+            1,
+            -10,
+            0.1
+          ],
+          "expected": 0.5
+        },
+        {
+          "args": [
+            1,
+            -1,
+            0.5
+          ],
+          "expected": 0.666666667
+        },
+        {
+          "args": [
+            2,
+            -100,
+            0.01
+          ],
+          "expected": 1.0
+        }
+      ]
+    },
+    {
+      "id": "ch08-newton",
+      "title": "Newton Step",
+      "difficulty": "Easy",
+      "func": "newton_step",
+      "tags": [
+        "newton"
+      ],
+      "section": "8.3",
+      "prompt": "Newton's method for solving f(x) = 0 (the optimality conditions) updates x\u207a = x \u2212 f(x)/f\u2032(x).\n\nImplement `newton_step(x, fx, dfx)`.",
+      "starter": "def newton_step(x, fx, dfx):\n    pass\n",
+      "solution": "def newton_step(x, fx, dfx):\n    return x - fx/dfx\n",
+      "tests": [
+        {
+          "args": [
+            2,
+            1,
+            4
+          ],
+          "expected": 1.75
+        },
+        {
+          "args": [
+            1,
+            -2,
+            2
+          ],
+          "expected": 2.0
+        },
+        {
+          "args": [
+            0,
+            3,
+            1
+          ],
+          "expected": -3.0
+        }
+      ]
+    },
+    {
+      "id": "ch08-newtsqrt",
+      "title": "Newton Iteration for \u221as",
+      "difficulty": "Medium",
+      "func": "newton_sqrt",
+      "tags": [
+        "newton"
+      ],
+      "section": "8.3",
+      "prompt": "Applying Newton's method to x\u00b2 \u2212 s = 0 gives the iteration x \u2190 \u00bd(x + s/x). Run it n times from x\u2080 = s.\n\nImplement `newton_sqrt(s, n)`.",
+      "starter": "def newton_sqrt(s, n):\n    pass\n",
+      "solution": "def newton_sqrt(s, n):\n    x = s if s > 0 else 1.0\n    for _ in range(n):\n        x = 0.5*(x + s/x)\n    return x\n",
+      "tests": [
+        {
+          "args": [
+            2,
+            5
+          ],
+          "expected": 1.414213562
+        },
+        {
+          "args": [
+            9,
+            10
+          ],
+          "expected": 3.0
+        },
+        {
+          "args": [
+            100,
+            15
+          ],
+          "expected": 10.0
+        }
+      ]
+    },
+    {
+      "id": "ch08-fdiff",
+      "title": "Forward Finite Difference",
+      "difficulty": "Easy",
+      "func": "forward_diff",
+      "tags": [
+        "derivatives"
+      ],
+      "section": "8.4.1",
+      "prompt": "A one-sided derivative estimate is f\u2032(x) \u2248 (f(x+dx) \u2212 f(x))/dx.\n\nGiven f0 = f(x), f1 = f(x+dx), implement `forward_diff(f0, f1, dx)`.",
+      "starter": "def forward_diff(f0, f1, dx):\n    pass\n",
+      "solution": "def forward_diff(f0, f1, dx):\n    return (f1 - f0)/dx\n",
+      "tests": [
+        {
+          "args": [
+            1,
+            3,
+            1
+          ],
+          "expected": 2.0
+        },
+        {
+          "args": [
+            2,
+            2,
+            0.5
+          ],
+          "expected": 0.0
+        },
+        {
+          "args": [
+            0,
+            1,
+            0.1
+          ],
+          "expected": 10.0
+        }
+      ]
+    },
+    {
+      "id": "ch08-cdiff",
+      "title": "Central Finite Difference",
+      "difficulty": "Easy",
+      "func": "central_diff",
+      "tags": [
+        "derivatives"
+      ],
+      "section": "8.4.1",
+      "prompt": "The more accurate central difference is f\u2032(x) \u2248 (f(x+dx) \u2212 f(x\u2212dx))/(2dx).\n\nGiven fm = f(x\u2212dx), fp = f(x+dx), implement `central_diff(fm, fp, dx)`.",
+      "starter": "def central_diff(fm, fp, dx):\n    pass\n",
+      "solution": "def central_diff(fm, fp, dx):\n    return (fp - fm)/(2*dx)\n",
+      "tests": [
+        {
+          "args": [
+            1,
+            3,
+            1
+          ],
+          "expected": 1.0
+        },
+        {
+          "args": [
+            4,
+            4,
+            0.5
+          ],
+          "expected": 0.0
+        },
+        {
+          "args": [
+            0,
+            2,
+            0.1
+          ],
+          "expected": 10.0
+        }
+      ]
+    },
+    {
+      "id": "ch08-shooting",
+      "title": "Single-Shooting Rollout",
+      "difficulty": "Hard",
+      "func": "single_shooting",
+      "tags": [
+        "shooting"
+      ],
+      "section": "8.5.1",
+      "prompt": "Sequential (single-shooting) methods simulate the whole trajectory from x0 and an input sequence (explicit Euler on \u1e8b = a x + b u), then optimize. Return the final state.\n\nImplement `single_shooting(x0, us, a, b, dt)`.",
+      "starter": "def single_shooting(x0, us, a, b, dt):\n    pass\n",
+      "solution": "def single_shooting(x0, us, a, b, dt):\n    x = x0\n    for u in us:\n        x = x + dt*(a*x + b*u)\n    return x\n",
+      "tests": [
+        {
+          "args": [
+            1,
+            [
+              0,
+              0,
+              0
+            ],
+            -1,
+            1,
+            0.1
+          ],
+          "expected": 0.729
+        },
+        {
+          "args": [
+            0,
+            [
+              1,
+              1,
+              1
+            ],
+            0,
+            1,
+            0.5
+          ],
+          "expected": 1.5
+        },
+        {
+          "args": [
+            2,
+            [
+              -1,
+              0,
+              1
+            ],
+            0.5,
+            2,
+            0.2
+          ],
+          "expected": 2.578
+        }
+      ]
+    },
+    {
+      "id": "ch08-defect",
+      "title": "Multiple-Shooting Defect",
+      "difficulty": "Easy",
+      "func": "defect",
+      "tags": [
+        "shooting"
+      ],
+      "section": "8.5.2",
+      "prompt": "Multiple shooting enforces continuity between segments by driving the defect to zero: the gap between the previous segment's end state and the next segment's start state.\n\nImplement `defect(xa, xb)` = xa \u2212 xb.",
+      "starter": "def defect(xa, xb):\n    pass\n",
+      "solution": "def defect(xa, xb):\n    return xa - xb\n",
+      "tests": [
+        {
+          "args": [
+            1.2,
+            1.0
+          ],
+          "expected": 0.2
+        },
+        {
+          "args": [
+            3,
+            3
+          ],
+          "expected": 0
+        },
+        {
+          "args": [
+            0.5,
+            0.8
+          ],
+          "expected": -0.3
+        }
+      ]
+    },
+    {
+      "id": "ch08-gn",
+      "title": "Gauss-Newton Normal Matrix",
+      "difficulty": "Medium",
+      "func": "normal_matrix",
+      "tags": [
+        "sqp"
+      ],
+      "section": "8.6.3",
+      "prompt": "The Gauss-Newton Hessian approximation is J\u1d40J. For a gradient vector J (one residual), the normal matrix entry (i,j) is J\u1d62\u00b7J\u2c7c.\n\nImplement `normal_matrix(J)` returning the n\u00d7n outer product.",
+      "starter": "def normal_matrix(J):\n    pass\n",
+      "solution": "def normal_matrix(J):\n    return [[J[i]*J[j] for j in range(len(J))]\n            for i in range(len(J))]\n",
+      "tests": [
+        {
+          "args": [
+            [
+              1,
+              2
+            ]
+          ],
+          "expected": [
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              4
+            ]
+          ]
+        },
+        {
+          "args": [
+            [
+              3,
+              0,
+              1
+            ]
+          ],
+          "expected": [
+            [
+              9,
+              0,
+              3
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              3,
+              0,
+              1
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+:root {
+  --bg: #fbfbfa;
+  --surface: #ffffff;
+  --surface-2: #f4f4f2;
+  --border: #e7e6e2;
+  --border-strong: #d8d7d2;
+  --text: #1c1b19;
+  --text-2: #6b6a66;
+  --text-3: #9b9a95;
+  --accent: #3b5bdb;
+  --accent-soft: #e7ecfb;
+  --accent-text: #2f49b0;
+  --highlight: #ffe79a;
+  --danger: #b4452f;
+  --radius: 10px;
+  --radius-sm: 7px;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 4px 16px rgba(0, 0, 0, .05);
+  --sidebar-w: 270px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #16161a;
+    --surface: #1d1d22;
+    --surface-2: #25252b;
+    --border: #2c2c33;
+    --border-strong: #3a3a42;
+    --text: #ecebe7;
+    --text-2: #a6a5a0;
+    --text-3: #76756f;
+    --accent: #7d97f4;
+    --accent-soft: #1e2440;
+    --accent-text: #a7b8fb;
+    --highlight: #b59a3a;
+    --danger: #e0775f;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 20px rgba(0, 0, 0, .35);
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body, #app {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  color: inherit;
+}
+
+::selection { background: color-mix(in srgb, var(--accent) 28%, transparent); }
+
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 6px; border: 3px solid var(--bg); }
+::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
+
+/* shared utility button styles */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  padding: 6px 11px;
+  font-weight: 500;
+  transition: background .12s, border-color .12s, transform .05s;
+}
+.btn:hover { background: var(--surface-2); }
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.primary:hover { filter: brightness(1.05); background: var(--accent); }
+.btn.icon { padding: 6px 9px; }
+
+.muted { color: var(--text-2); }
