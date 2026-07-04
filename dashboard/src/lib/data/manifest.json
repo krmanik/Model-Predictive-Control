@@ -1,0 +1,1435 @@
+{
+  "generated": "2026-07-04T01:47:41.609Z",
+  "chapters": [
+    {
+      "id": "ch01",
+      "n": 1,
+      "title": "Getting Started with MPC",
+      "start": 1,
+      "end": 88,
+      "ex": 60,
+      "pdf": "/book/ch01.pdf",
+      "exPdf": "/book/ch01-ex.pdf",
+      "pages": 88,
+      "sections": [
+        {
+          "num": "1.1",
+          "title": "Introduction",
+          "page": 1,
+          "y": 0.3915,
+          "subs": []
+        },
+        {
+          "num": "1.2",
+          "title": "Models and Modeling",
+          "page": 1,
+          "y": 0.6659,
+          "subs": [
+            {
+              "num": "1.2.1",
+              "title": "Linear Dynamic Models",
+              "page": 2,
+              "y": 0.4536
+            },
+            {
+              "num": "1.2.2",
+              "title": "Input-Output Models",
+              "page": 3,
+              "y": 0.4721
+            },
+            {
+              "num": "1.2.3",
+              "title": "Distributed Models",
+              "page": 4,
+              "y": 0.3101
+            },
+            {
+              "num": "1.2.4",
+              "title": "Discrete Time Models",
+              "page": 5,
+              "y": 0.1357
+            },
+            {
+              "num": "1.2.5",
+              "title": "Constraints",
+              "page": 6,
+              "y": 0.3916
+            },
+            {
+              "num": "1.2.6",
+              "title": "Deterministic and Stochastic",
+              "page": 9,
+              "y": 0.7068
+            }
+          ]
+        },
+        {
+          "num": "1.3",
+          "title": "Introductory MPC Regulator",
+          "page": 11,
+          "y": 0.3985,
+          "subs": [
+            {
+              "num": "1.3.1",
+              "title": "Linear Quadratic Problem",
+              "page": 11,
+              "y": 0.4298
+            },
+            {
+              "num": "1.3.2",
+              "title": "Optimizing Multistage Functions",
+              "page": 12,
+              "y": 0.6619
+            },
+            {
+              "num": "1.3.3",
+              "title": "Dynamic Programming Solution",
+              "page": 18,
+              "y": 0.3848
+            },
+            {
+              "num": "1.3.4",
+              "title": "The In®nite Horizon LQ Problem",
+              "page": 21,
+              "y": 0.1357
+            },
+            {
+              "num": "1.3.5",
+              "title": "Controllability",
+              "page": 23,
+              "y": 0.1357
+            },
+            {
+              "num": "1.3.6",
+              "title": "Convergence of the Linear Quadratic Regulator",
+              "page": 24,
+              "y": 0.4224
+            }
+          ]
+        },
+        {
+          "num": "1.4",
+          "title": "Introductory State Estimation",
+          "page": 26,
+          "y": 0.5061,
+          "subs": [
+            {
+              "num": "1.4.1",
+              "title": "Linear Systems and Normal Distributions",
+              "page": 27,
+              "y": 0.1357
+            },
+            {
+              "num": "1.4.2",
+              "title": "Linear Optimal State Estimation",
+              "page": 29,
+              "y": 0.3917
+            },
+            {
+              "num": "1.4.3",
+              "title": "Least Squares Estimation",
+              "page": 33,
+              "y": 0.3752
+            },
+            {
+              "num": "1.4.4",
+              "title": "Moving Horizon Estimation",
+              "page": 39,
+              "y": 0.5409
+            },
+            {
+              "num": "1.4.5",
+              "title": "Observability",
+              "page": 41,
+              "y": 0.5174
+            },
+            {
+              "num": "1.4.6",
+              "title": "Convergence of the State Estimator",
+              "page": 43,
+              "y": 0.1357
+            }
+          ]
+        },
+        {
+          "num": "1.5",
+          "title": "Tracking, Disturbances, and Zero Offset",
+          "page": 46,
+          "y": 0.4496,
+          "subs": [
+            {
+              "num": "1.5.1",
+              "title": "Tracking",
+              "page": 46,
+              "y": 0.5735
+            },
+            {
+              "num": "1.5.2",
+              "title": "Disturbances and Zero Offset",
+              "page": 49,
+              "y": 0.3526
+            }
+          ]
+        }
+      ],
+      "slides": [],
+      "videos": []
+    },
+    {
+      "id": "ch02",
+      "n": 2,
+      "title": "MPC — Regulation",
+      "start": 89,
+      "end": 192,
+      "ex": 172,
+      "pdf": "/book/ch02.pdf",
+      "exPdf": "/book/ch02-ex.pdf",
+      "pages": 104,
+      "sections": [
+        {
+          "num": "2.1",
+          "title": "Introduction",
+          "page": 1,
+          "y": 0.3675,
+          "subs": []
+        },
+        {
+          "num": "2.2",
+          "title": "Model Predictive Control",
+          "page": 3,
+          "y": 0.4543,
+          "subs": []
+        },
+        {
+          "num": "2.3",
+          "title": "Dynamic Programming Solution",
+          "page": 19,
+          "y": 0.646,
+          "subs": []
+        },
+        {
+          "num": "2.4",
+          "title": "Stability",
+          "page": 24,
+          "y": 0.2745,
+          "subs": [
+            {
+              "num": "2.4.1",
+              "title": "Introduction",
+              "page": 24,
+              "y": 0.3058
+            },
+            {
+              "num": "2.4.2",
+              "title": "Stabilizing Conditions",
+              "page": 26,
+              "y": 0.4433
+            },
+            {
+              "num": "2.4.3",
+              "title": "Exponential Stability",
+              "page": 32,
+              "y": 0.2588
+            },
+            {
+              "num": "2.4.4",
+              "title": "Controllability and Observability",
+              "page": 32,
+              "y": 0.6194
+            },
+            {
+              "num": "2.4.5",
+              "title": "Time-Varying Systems",
+              "page": 35,
+              "y": 0.2123
+            }
+          ]
+        },
+        {
+          "num": "2.5",
+          "title": "Examples of MPC",
+          "page": 42,
+          "y": 0.8428,
+          "subs": [
+            {
+              "num": "2.5.1",
+              "title": "The Unconstrained Linear Quadratic Regulator",
+              "page": 44,
+              "y": 0.3674
+            },
+            {
+              "num": "2.5.2",
+              "title": "Unconstrained Linear Periodic Systems",
+              "page": 45,
+              "y": 0.4343
+            },
+            {
+              "num": "2.5.3",
+              "title": "Stable Linear Systems with Control Constraints",
+              "page": 46,
+              "y": 0.8249
+            },
+            {
+              "num": "2.5.4",
+              "title": "Linear Systems with Control and State Constraints",
+              "page": 48,
+              "y": 0.1357
+            },
+            {
+              "num": "2.5.5",
+              "title": "Constrained Nonlinear Systems",
+              "page": 51,
+              "y": 0.1357
+            },
+            {
+              "num": "2.5.6",
+              "title": "Constrained Nonlinear Time-Varying Systems",
+              "page": 53,
+              "y": 0.8052
+            }
+          ]
+        },
+        {
+          "num": "2.6",
+          "title": "Is a Terminal Constraint Set X f Necessary?",
+          "page": 56,
+          "y": 0.1357,
+          "subs": []
+        },
+        {
+          "num": "2.7",
+          "title": "Suboptimal MPC",
+          "page": 59,
+          "y": 0.4994,
+          "subs": [
+            {
+              "num": "2.7.1",
+              "title": "Extended State",
+              "page": 62,
+              "y": 0.2221
+            },
+            {
+              "num": "2.7.2",
+              "title": "Asymptotic Stability of Difference Inclusions",
+              "page": 62,
+              "y": 0.6954
+            }
+          ]
+        },
+        {
+          "num": "2.8",
+          "title": "Economic Model Predictive Control",
+          "page": 65,
+          "y": 0.1357,
+          "subs": [
+            {
+              "num": "2.8.1",
+              "title": "Asymptotic Average Performance",
+              "page": 67,
+              "y": 0.345
+            },
+            {
+              "num": "2.8.2",
+              "title": "Dissipativity and Asymptotic Stability",
+              "page": 68,
+              "y": 0.3723
+            }
+          ]
+        },
+        {
+          "num": "2.9",
+          "title": "Discrete Actuators",
+          "page": 72,
+          "y": 0.7235,
+          "subs": []
+        },
+        {
+          "num": "2.10",
+          "title": "Concluding Comments",
+          "page": 75,
+          "y": 0.8229,
+          "subs": []
+        },
+        {
+          "num": "2.11",
+          "title": "Notes",
+          "page": 78,
+          "y": 0.8612,
+          "subs": []
+        }
+      ],
+      "slides": [],
+      "videos": []
+    },
+    {
+      "id": "ch03",
+      "n": 3,
+      "title": "Robust and Stochastic MPC",
+      "start": 193,
+      "end": 268,
+      "ex": 262,
+      "pdf": "/book/ch03.pdf",
+      "exPdf": "/book/ch03-ex.pdf",
+      "pages": 76,
+      "sections": [
+        {
+          "num": "3.1",
+          "title": "Introduction",
+          "page": 1,
+          "y": 0.413,
+          "subs": [
+            {
+              "num": "3.1.1",
+              "title": "Types of Uncertainty",
+              "page": 1,
+              "y": 0.4471
+            },
+            {
+              "num": "3.1.2",
+              "title": "Feedback Versus Open-Loop Control",
+              "page": 3,
+              "y": 0.1357
+            },
+            {
+              "num": "3.1.3",
+              "title": "Robust and Stochastic MPC",
+              "page": 8,
+              "y": 0.1357
+            },
+            {
+              "num": "3.1.4",
+              "title": "Tubes",
+              "page": 10,
+              "y": 0.4116
+            },
+            {
+              "num": "3.1.5",
+              "title": "Difference Inclusion Description of Uncertain Sys- tems",
+              "page": 11,
+              "y": 0.2733
+            }
+          ]
+        },
+        {
+          "num": "3.2",
+          "title": "Nominal ( Inherent ) Robustness",
+          "page": 12,
+          "y": 0.5306,
+          "subs": [
+            {
+              "num": "3.2.1",
+              "title": "Introduction",
+              "page": 12,
+              "y": 0.5635
+            },
+            {
+              "num": "3.2.2",
+              "title": "Difference Inclusion Description of Discontinu- ous Systems",
+              "page": 14,
+              "y": 0.248
+            },
+            {
+              "num": "3.2.3",
+              "title": "When Is Nominal MPC Robust?",
+              "page": 15,
+              "y": 0.3145
+            },
+            {
+              "num": "3.2.4",
+              "title": "Robustness of Nominal MPC",
+              "page": 17,
+              "y": 0.5229
+            }
+          ]
+        },
+        {
+          "num": "3.3",
+          "title": "Min-Max Optimal Control: Dynamic Programming Solution",
+          "page": 22,
+          "y": 0.6694,
+          "subs": [
+            {
+              "num": "3.3.1",
+              "title": "Introduction",
+              "page": 22,
+              "y": 0.7248
+            },
+            {
+              "num": "3.3.2",
+              "title": "Properties of the Dynamic Programming Solution",
+              "page": 24,
+              "y": 0.6455
+            }
+          ]
+        },
+        {
+          "num": "3.4",
+          "title": "Robust Min-Max MPC",
+          "page": 28,
+          "y": 0.1357,
+          "subs": []
+        },
+        {
+          "num": "3.5",
+          "title": "Tube-Based Robust MPC",
+          "page": 31,
+          "y": 0.301,
+          "subs": [
+            {
+              "num": "3.5.1",
+              "title": "Introduction",
+              "page": 31,
+              "y": 0.3325
+            },
+            {
+              "num": "3.5.2",
+              "title": "Outer-Bounding Tube for a Linear System with Additive Disturbance",
+              "page": 32,
+              "y": 0.7561
+            },
+            {
+              "num": "3.5.3",
+              "title": "Tube-Based MPC of Linear Systems with Additive Disturbances",
+              "page": 36,
+              "y": 0.8052
+            },
+            {
+              "num": "3.5.4",
+              "title": "Improved Tube-Based MPC of Linear Systems with Additive Disturbances",
+              "page": 42,
+              "y": 0.1357
+            }
+          ]
+        },
+        {
+          "num": "3.6",
+          "title": "Tube-Based MPC of Nonlinear Systems",
+          "page": 44,
+          "y": 0.2884,
+          "subs": [
+            {
+              "num": "3.6.1",
+              "title": "The Nominal Trajectory",
+              "page": 46,
+              "y": 0.1357
+            },
+            {
+              "num": "3.6.2",
+              "title": "Model Predictive Controller",
+              "page": 46,
+              "y": 0.7851
+            },
+            {
+              "num": "3.6.3",
+              "title": "Choosing the Nominal Constraint Sets Å U and Å X",
+              "page": 50,
+              "y": 0.51
+            }
+          ]
+        },
+        {
+          "num": "3.7",
+          "title": "Stochastic MPC",
+          "page": 54,
+          "y": 0.6752,
+          "subs": [
+            {
+              "num": "3.7.1",
+              "title": "Introduction",
+              "page": 54,
+              "y": 0.7066
+            },
+            {
+              "num": "3.7.2",
+              "title": "Stabilizing Conditions",
+              "page": 56,
+              "y": 0.1357
+            },
+            {
+              "num": "3.7.3",
+              "title": "Stochastic Optimization",
+              "page": 56,
+              "y": 0.8249
+            },
+            {
+              "num": "3.7.4",
+              "title": "Tube-Based Stochastic MPC for Linear Constrained Systems",
+              "page": 57,
+              "y": 0.7855
+            }
+          ]
+        },
+        {
+          "num": "3.8",
+          "title": "Notes",
+          "page": 65,
+          "y": 0.469,
+          "subs": []
+        }
+      ],
+      "slides": [],
+      "videos": []
+    },
+    {
+      "id": "ch04",
+      "n": 4,
+      "title": "State Estimation",
+      "start": 269,
+      "end": 338,
+      "ex": 327,
+      "pdf": "/book/ch04.pdf",
+      "exPdf": "/book/ch04-ex.pdf",
+      "pages": 70,
+      "sections": [
+        {
+          "num": "4.1",
+          "title": "Introduction",
+          "page": 1,
+          "y": 0.3552,
+          "subs": []
+        },
+        {
+          "num": "4.2",
+          "title": "Full Information Estimation",
+          "page": 1,
+          "y": 0.8035,
+          "subs": [
+            {
+              "num": "4.2.1",
+              "title": "State Estimation as Optimal Control of Estimate Error",
+              "page": 10,
+              "y": 0.4815
+            },
+            {
+              "num": "4.2.2",
+              "title": "Duality of Linear Estimation and Regulation",
+              "page": 13,
+              "y": 0.4147
+            }
+          ]
+        },
+        {
+          "num": "4.3",
+          "title": "Moving Horizon Estimation",
+          "page": 15,
+          "y": 0.441,
+          "subs": [
+            {
+              "num": "4.3.1",
+              "title": "Zero Prior Weighting",
+              "page": 15,
+              "y": 0.7855
+            },
+            {
+              "num": "4.3.2",
+              "title": "Nonzero Prior Weighting",
+              "page": 19,
+              "y": 0.4727
+            },
+            {
+              "num": "4.3.3",
+              "title": "Constrained Estimation",
+              "page": 26,
+              "y": 0.2543
+            },
+            {
+              "num": "4.3.4",
+              "title": "Smoothing and Filtering Update",
+              "page": 27,
+              "y": 0.852
+            }
+          ]
+        },
+        {
+          "num": "4.4",
+          "title": "Bounded Disturbances",
+          "page": 32,
+          "y": 0.6453,
+          "subs": []
+        },
+        {
+          "num": "4.5",
+          "title": "Other Nonlinear State Estimators",
+          "page": 40,
+          "y": 0.655,
+          "subs": [
+            {
+              "num": "4.5.1",
+              "title": "Particle Filtering",
+              "page": 40,
+              "y": 0.8642
+            },
+            {
+              "num": "4.5.2",
+              "title": "Extended Kalman Filtering",
+              "page": 41,
+              "y": 0.2998
+            },
+            {
+              "num": "4.5.3",
+              "title": "Unscented Kalman Filtering",
+              "page": 42,
+              "y": 0.7658
+            },
+            {
+              "num": "4.5.4",
+              "title": "EKF, UKF, and MHE Comparison",
+              "page": 44,
+              "y": 0.6871
+            }
+          ]
+        },
+        {
+          "num": "4.6",
+          "title": "On combining MHE and MPC",
+          "page": 50,
+          "y": 0.4253,
+          "subs": []
+        },
+        {
+          "num": "4.7",
+          "title": "Notes",
+          "page": 57,
+          "y": 0.1357,
+          "subs": []
+        }
+      ],
+      "slides": [],
+      "videos": []
+    },
+    {
+      "id": "ch05",
+      "n": 5,
+      "title": "Output MPC",
+      "start": 339,
+      "end": 368,
+      "ex": 366,
+      "pdf": "/book/ch05.pdf",
+      "exPdf": "/book/ch05-ex.pdf",
+      "pages": 30,
+      "sections": [
+        {
+          "num": "5.1",
+          "title": "Introduction",
+          "page": 1,
+          "y": 0.3707,
+          "subs": []
+        },
+        {
+          "num": "5.2",
+          "title": "A Method for Output MPC",
+          "page": 3,
+          "y": 0.6404,
+          "subs": []
+        },
+        {
+          "num": "5.3",
+          "title": "Linear Constrained Systems: Time-Invariant Case",
+          "page": 6,
+          "y": 0.1357,
+          "subs": [
+            {
+              "num": "5.3.1",
+              "title": "Introduction",
+              "page": 6,
+              "y": 0.167
+            },
+            {
+              "num": "5.3.2",
+              "title": "State Estimator",
+              "page": 6,
+              "y": 0.602
+            },
+            {
+              "num": "5.3.3",
+              "title": "Controlling Ã x",
+              "page": 8,
+              "y": 0.39
+            },
+            {
+              "num": "5.3.4",
+              "title": "Output MPC",
+              "page": 10,
+              "y": 0.2166
+            },
+            {
+              "num": "5.3.5",
+              "title": "Computing the Tightened Constraints",
+              "page": 14,
+              "y": 0.5191
+            }
+          ]
+        },
+        {
+          "num": "5.4",
+          "title": "Linear Constrained Systems: Time-Varying Case",
+          "page": 15,
+          "y": 0.5249,
+          "subs": []
+        },
+        {
+          "num": "5.5",
+          "title": "Offset-Free MPC",
+          "page": 15,
+          "y": 0.8621,
+          "subs": [
+            {
+              "num": "5.5.1",
+              "title": "Estimation",
+              "page": 17,
+              "y": 0.4323
+            },
+            {
+              "num": "5.5.2",
+              "title": "Control",
+              "page": 18,
+              "y": 0.5393
+            },
+            {
+              "num": "5.5.3",
+              "title": "Convergence Analysis",
+              "page": 22,
+              "y": 0.5096
+            }
+          ]
+        },
+        {
+          "num": "5.6",
+          "title": "Nonlinear Constrained Systems",
+          "page": 25,
+          "y": 0.5167,
+          "subs": []
+        },
+        {
+          "num": "5.7",
+          "title": "Notes",
+          "page": 25,
+          "y": 0.6832,
+          "subs": []
+        }
+      ],
+      "slides": [],
+      "videos": []
+    },
+    {
+      "id": "ch06",
+      "n": 6,
+      "title": "Distributed MPC",
+      "start": 369,
+      "end": 450,
+      "ex": 435,
+      "pdf": "/book/ch06.pdf",
+      "exPdf": "/book/ch06-ex.pdf",
+      "pages": 82,
+      "sections": [
+        {
+          "num": "6.1",
+          "title": "Introduction and Preliminary Results",
+          "page": 1,
+          "y": 0.3511,
+          "subs": [
+            {
+              "num": "6.1.1",
+              "title": "Least Squares Solution",
+              "page": 2,
+              "y": 0.3733
+            },
+            {
+              "num": "6.1.2",
+              "title": "Stability of Suboptimal MPC",
+              "page": 7,
+              "y": 0.4632
+            }
+          ]
+        },
+        {
+          "num": "6.2",
+          "title": "Unconstrained Two-Player Game",
+          "page": 12,
+          "y": 0.6243,
+          "subs": [
+            {
+              "num": "6.2.1",
+              "title": "Centralized Control",
+              "page": 14,
+              "y": 0.33
+            },
+            {
+              "num": "6.2.2",
+              "title": "Decentralized Control",
+              "page": 15,
+              "y": 0.4122
+            },
+            {
+              "num": "6.2.3",
+              "title": "Noncooperative Game",
+              "page": 16,
+              "y": 0.3368
+            },
+            {
+              "num": "6.2.4",
+              "title": "Cooperative Game",
+              "page": 24,
+              "y": 0.6347
+            },
+            {
+              "num": "6.2.5",
+              "title": "Tracking Nonzero Setpoints",
+              "page": 30,
+              "y": 0.6723
+            },
+            {
+              "num": "6.2.6",
+              "title": "State Estimation",
+              "page": 37,
+              "y": 0.2496
+            }
+          ]
+        },
+        {
+          "num": "6.3",
+          "title": "Constrained Two-Player Game",
+          "page": 38,
+          "y": 0.6449,
+          "subs": [
+            {
+              "num": "6.3.1",
+              "title": "Uncoupled Input Constraints",
+              "page": 40,
+              "y": 0.2429
+            },
+            {
+              "num": "6.3.2",
+              "title": "Coupled Input Constraints",
+              "page": 43,
+              "y": 0.4014
+            },
+            {
+              "num": "6.3.3",
+              "title": "Exponential Convergence with Estimate Error",
+              "page": 45,
+              "y": 0.1357
+            },
+            {
+              "num": "6.3.4",
+              "title": "Disturbance Models and Zero Offset",
+              "page": 47,
+              "y": 0.1357
+            }
+          ]
+        },
+        {
+          "num": "6.4",
+          "title": "Constrained M -Player Game",
+          "page": 51,
+          "y": 0.2446,
+          "subs": []
+        },
+        {
+          "num": "6.5",
+          "title": "Nonlinear Distributed MPC",
+          "page": 53,
+          "y": 0.2251,
+          "subs": [
+            {
+              "num": "6.5.1",
+              "title": "Nonconvexity",
+              "page": 53,
+              "y": 0.8045
+            },
+            {
+              "num": "6.5.2",
+              "title": "Distributed Algorithm for Nonconvex Functions",
+              "page": 55,
+              "y": 0.5103
+            },
+            {
+              "num": "6.5.3",
+              "title": "Distributed Nonlinear Cooperative Control",
+              "page": 57,
+              "y": 0.8444
+            },
+            {
+              "num": "6.5.4",
+              "title": "Stability",
+              "page": 60,
+              "y": 0.8325
+            }
+          ]
+        },
+        {
+          "num": "6.6",
+          "title": "Notes",
+          "page": 62,
+          "y": 0.8024,
+          "subs": []
+        }
+      ],
+      "slides": [],
+      "videos": []
+    },
+    {
+      "id": "ch07",
+      "n": 7,
+      "title": "Explicit Control Laws",
+      "start": 451,
+      "end": 490,
+      "ex": 484,
+      "pdf": "/book/ch07.pdf",
+      "exPdf": "/book/ch07-ex.pdf",
+      "pages": 40,
+      "sections": [
+        {
+          "num": "7.1",
+          "title": "Introduction",
+          "page": 1,
+          "y": 0.3904,
+          "subs": []
+        },
+        {
+          "num": "7.2",
+          "title": "Parametric Programming",
+          "page": 2,
+          "y": 0.6047,
+          "subs": []
+        },
+        {
+          "num": "7.3",
+          "title": "Parametric Quadratic Programming",
+          "page": 7,
+          "y": 0.2381,
+          "subs": [
+            {
+              "num": "7.3.1",
+              "title": "Preliminaries",
+              "page": 7,
+              "y": 0.2694
+            },
+            {
+              "num": "7.3.2",
+              "title": "Preview",
+              "page": 8,
+              "y": 0.5887
+            },
+            {
+              "num": "7.3.3",
+              "title": "Optimality Condition for a Convex Program",
+              "page": 9,
+              "y": 0.1357
+            },
+            {
+              "num": "7.3.4",
+              "title": "Solution of the Parametric Quadratic Program",
+              "page": 12,
+              "y": 0.1357
+            },
+            {
+              "num": "7.3.5",
+              "title": "Continuity of V",
+              "page": 16,
+              "y": 0.5494
+            }
+          ]
+        },
+        {
+          "num": "7.4",
+          "title": "Constrained Linear Quadratic Control",
+          "page": 17,
+          "y": 0.3231,
+          "subs": []
+        },
+        {
+          "num": "7.5",
+          "title": "Parametric Piecewise Quadratic Programming",
+          "page": 19,
+          "y": 0.1357,
+          "subs": []
+        },
+        {
+          "num": "7.6",
+          "title": "DP Solution of the Constrained LQ Control Problem",
+          "page": 25,
+          "y": 0.221,
+          "subs": []
+        },
+        {
+          "num": "7.7",
+          "title": "Parametric Linear Programming",
+          "page": 26,
+          "y": 0.6131,
+          "subs": [
+            {
+              "num": "7.7.1",
+              "title": "Preliminaries",
+              "page": 26,
+              "y": 0.6444
+            },
+            {
+              "num": "7.7.2",
+              "title": "Minimizer u",
+              "page": 28,
+              "y": 0.8249
+            }
+          ]
+        },
+        {
+          "num": "7.8",
+          "title": "Constrained Linear Control",
+          "page": 31,
+          "y": 0.6175,
+          "subs": []
+        },
+        {
+          "num": "7.9",
+          "title": "Computation",
+          "page": 32,
+          "y": 0.3314,
+          "subs": []
+        },
+        {
+          "num": "7.10",
+          "title": "Notes",
+          "page": 33,
+          "y": 0.1357,
+          "subs": []
+        }
+      ],
+      "slides": [],
+      "videos": []
+    },
+    {
+      "id": "ch08",
+      "n": 8,
+      "title": "Numerical Optimal Control",
+      "start": 491,
+      "end": 600,
+      "ex": 583,
+      "pdf": "/book/ch08.pdf",
+      "exPdf": "/book/ch08-ex.pdf",
+      "pages": 110,
+      "sections": [
+        {
+          "num": "8.1",
+          "title": "Introduction",
+          "page": 1,
+          "y": 0.2928,
+          "subs": [
+            {
+              "num": "8.1.1",
+              "title": "Discrete Time Optimal Control Problem",
+              "page": 2,
+              "y": 0.4145
+            },
+            {
+              "num": "8.1.2",
+              "title": "Convex Versus Nonconvex Optimization",
+              "page": 3,
+              "y": 0.5494
+            },
+            {
+              "num": "8.1.3",
+              "title": "Simultaneous Versus Sequential Optimal Control",
+              "page": 6,
+              "y": 0.5285
+            },
+            {
+              "num": "8.1.4",
+              "title": "Continuous Time Optimal Control Problem",
+              "page": 8,
+              "y": 0.6434
+            }
+          ]
+        },
+        {
+          "num": "8.2",
+          "title": "Numerical Simulation",
+          "page": 11,
+          "y": 0.1357,
+          "subs": [
+            {
+              "num": "8.2.1",
+              "title": "Explicit Runge-Kutta Methods",
+              "page": 12,
+              "y": 0.6549
+            },
+            {
+              "num": "8.2.2",
+              "title": "Stiff Equations and Implicit Integrators",
+              "page": 16,
+              "y": 0.2228
+            },
+            {
+              "num": "8.2.3",
+              "title": "Implicit Runge-Kutta and Collocation Methods",
+              "page": 17,
+              "y": 0.3748
+            },
+            {
+              "num": "8.2.4",
+              "title": "Differential Algebraic Equations",
+              "page": 21,
+              "y": 0.8642
+            },
+            {
+              "num": "8.2.5",
+              "title": "Integrator Adaptivity",
+              "page": 23,
+              "y": 0.3027
+            }
+          ]
+        },
+        {
+          "num": "8.3",
+          "title": "Solving Nonlinear Equation Systems",
+          "page": 23,
+          "y": 0.5845,
+          "subs": [
+            {
+              "num": "8.3.1",
+              "title": "Linear Systems",
+              "page": 23,
+              "y": 0.7841
+            },
+            {
+              "num": "8.3.2",
+              "title": "Nonlinear Root-Finding Problems",
+              "page": 24,
+              "y": 0.8446
+            },
+            {
+              "num": "8.3.3",
+              "title": "Local Convergence of Newton-Type Methods",
+              "page": 27,
+              "y": 0.208
+            },
+            {
+              "num": "8.3.4",
+              "title": "Af®ne Invariance",
+              "page": 29,
+              "y": 0.2191
+            },
+            {
+              "num": "8.3.5",
+              "title": "Globalization for Newton-Type Methods",
+              "page": 29,
+              "y": 0.5294
+            }
+          ]
+        },
+        {
+          "num": "8.4",
+          "title": "Computing Derivatives",
+          "page": 30,
+          "y": 0.2588,
+          "subs": [
+            {
+              "num": "8.4.1",
+              "title": "Numerical Differentiation",
+              "page": 31,
+              "y": 0.1357
+            },
+            {
+              "num": "8.4.2",
+              "title": "Algorithmic Differentiation",
+              "page": 32,
+              "y": 0.5134
+            },
+            {
+              "num": "8.4.3",
+              "title": "Implicit Function Interpretation",
+              "page": 33,
+              "y": 0.5697
+            },
+            {
+              "num": "8.4.4",
+              "title": "Algorithmic Differentiation in Forward Mode",
+              "page": 36,
+              "y": 0.4519
+            },
+            {
+              "num": "8.4.5",
+              "title": "Algorithmic Differentiation in Reverse Mode",
+              "page": 38,
+              "y": 0.2176
+            },
+            {
+              "num": "8.4.6",
+              "title": "Differentiation of Simulation Routines",
+              "page": 41,
+              "y": 0.4465
+            },
+            {
+              "num": "8.4.7",
+              "title": "Algorithmic and Symbolic Differentiation Software",
+              "page": 43,
+              "y": 0.2585
+            },
+            {
+              "num": "8.4.8",
+              "title": "CasADi for Optimization",
+              "page": 43,
+              "y": 0.7656
+            }
+          ]
+        },
+        {
+          "num": "8.5",
+          "title": "Direct Optimal Control Parameterizations",
+          "page": 46,
+          "y": 0.8627,
+          "subs": [
+            {
+              "num": "8.5.1",
+              "title": "Direct Single Shooting",
+              "page": 48,
+              "y": 0.1357
+            },
+            {
+              "num": "8.5.2",
+              "title": "Direct Multiple Shooting",
+              "page": 50,
+              "y": 0.7855
+            },
+            {
+              "num": "8.5.3",
+              "title": "Direct Transcription and Collocation Methods",
+              "page": 54,
+              "y": 0.4827
+            }
+          ]
+        },
+        {
+          "num": "8.6",
+          "title": "Nonlinear Optimization",
+          "page": 58,
+          "y": 0.3373,
+          "subs": [
+            {
+              "num": "8.6.1",
+              "title": "Optimality Conditions and Perturbation Analysis",
+              "page": 59,
+              "y": 0.6211
+            },
+            {
+              "num": "8.6.2",
+              "title": "Nonlinear Optimization with Equalities",
+              "page": 62,
+              "y": 0.2692
+            },
+            {
+              "num": "8.6.3",
+              "title": "Hessian Approximations",
+              "page": 63,
+              "y": 0.8642
+            }
+          ]
+        },
+        {
+          "num": "8.7",
+          "title": "Newton-Type Optimization with Inequalities",
+          "page": 66,
+          "y": 0.8627,
+          "subs": [
+            {
+              "num": "8.7.1",
+              "title": "Sequential Quadratic Programming",
+              "page": 67,
+              "y": 0.3192
+            },
+            {
+              "num": "8.7.2",
+              "title": "Nonlinear Interior Point Methods",
+              "page": 68,
+              "y": 0.6578
+            },
+            {
+              "num": "8.7.3",
+              "title": "Comparison of SQP and Nonlinear IP Methods",
+              "page": 70,
+              "y": 0.8226
+            }
+          ]
+        },
+        {
+          "num": "8.8",
+          "title": "Structure in Discrete Time Optimal Control",
+          "page": 71,
+          "y": 0.4911,
+          "subs": [
+            {
+              "num": "8.8.1",
+              "title": "Simultaneous Approach",
+              "page": 72,
+              "y": 0.641
+            },
+            {
+              "num": "8.8.2",
+              "title": "Linear Quadratic Problems (LQP)",
+              "page": 74,
+              "y": 0.3531
+            },
+            {
+              "num": "8.8.3",
+              "title": "LQP Solution by Riccati Recursion",
+              "page": 74,
+              "y": 0.7598
+            },
+            {
+              "num": "8.8.4",
+              "title": "LQP Solution by Condensing",
+              "page": 76,
+              "y": 0.6276
+            },
+            {
+              "num": "8.8.5",
+              "title": "Sequential Approaches and Sparsity Exploitation",
+              "page": 78,
+              "y": 0.6662
+            },
+            {
+              "num": "8.8.6",
+              "title": "Differential Dynamic Programming",
+              "page": 80,
+              "y": 0.494
+            },
+            {
+              "num": "8.8.7",
+              "title": "Additional Constraints in Optimal Control",
+              "page": 82,
+              "y": 0.3455
+            }
+          ]
+        },
+        {
+          "num": "8.9",
+          "title": "Online Optimization Algorithms",
+          "page": 83,
+          "y": 0.7616,
+          "subs": [
+            {
+              "num": "8.9.1",
+              "title": "General Algorithmic Considerations",
+              "page": 84,
+              "y": 0.203
+            },
+            {
+              "num": "8.9.2",
+              "title": "Continuation Methods and Real-Time Iterations",
+              "page": 87,
+              "y": 0.5819
+            }
+          ]
+        },
+        {
+          "num": "8.10",
+          "title": "Notes",
+          "page": 90,
+          "y": 0.7621,
+          "subs": []
+        }
+      ],
+      "slides": [],
+      "videos": []
+    }
+  ]
+}
